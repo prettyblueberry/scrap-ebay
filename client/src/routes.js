@@ -105,11 +105,11 @@ const routes = [
   { type: "divider", key: "divider-0" },
   {
     type: "collapse",
-    name: "Dashboards",
-    key: "dashboard_main",
+    name: "Dashboard",
+    key: "dashboard",
     icon: <Icon fontSize="medium">dashboard</Icon>,
     noCollapse: true,
-    route: "/dashboards/main",
+    route: "/dashboard",
     component: <DashboardMain />,
   },{
     type: "collapse",

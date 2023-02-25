@@ -100,7 +100,7 @@ function DashboardMain() {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={4}>
               <DefaultStatisticsCard
-                title="aaasales"
+                title="dashboard"
                 count="$230,220"
                 percentage={{
                   color: "success",
