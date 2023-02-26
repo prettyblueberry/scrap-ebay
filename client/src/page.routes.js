@@ -40,6 +40,28 @@ const pageRoutes = [
     rowsPerColumn: 2,
     collapse: [
       {
+        name: "dashboard",
+        icon: <Icon>dashboard</Icon>,
+        route: "/dashboard",
+      },
+      {
+        name: "analytics",
+        icon: <Icon>analytics</Icon>,
+        collapse: [
+          {
+            name: "sellers",
+            route: "/dashboards/analytics",
+          },
+          {
+            name: "products",
+            route: "/dashboards/sales",
+          },
+        ],
+      },
+
+
+
+      {
         name: "dashboards",
         icon: <Icon>dashboard</Icon>,
         collapse: [
@@ -53,11 +75,7 @@ const pageRoutes = [
           },
         ],
       },
-      {
-        name: "dashboard",
-        icon: <Icon>dashboard</Icon>,
-        route: "/dashboard",
-      },
+
       {
         name: "users",
         icon: <Icon>people</Icon>,

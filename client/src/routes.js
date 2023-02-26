@@ -38,7 +38,6 @@ Coded by www.creative-tim.com
 // Material Dashboard 2 PRO React layouts
 import Analytics from "layouts/dashboards/analytics";
 import Sales from "layouts/dashboards/sales";
-import Dashboard from "layouts/dashboard";
 import ProfileOverview from "layouts/pages/profile/profile-overview";
 import AllProjects from "layouts/pages/profile/all-projects";
 import NewUser from "layouts/pages/users/new-user";
@@ -75,6 +74,11 @@ import Icon from "@mui/material/Icon";
 // Images
 import profilePicture from "assets/images/team-3.jpg";
 
+//customized components
+import Dashboard from "layouts/dashboard";
+import SellerList from "layouts/sellers/list";
+
+
 const routes = [
   {
     type: "collapse",
@@ -110,8 +114,30 @@ const routes = [
     icon: <Icon fontSize="medium">dashboard</Icon>,
     noCollapse: true,
     route: "/dashboard",
-    component: <DashboardMain />,
-  },{
+    component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "Analytics",
+    key: "analytics",
+    icon: <Icon fontSize="medium">analytics</Icon>,
+    collapse: [
+      {
+        name: "Sellers",
+        key: "sellers",
+        route: "/analytics/sellers",
+        component: <SellerList />,
+      },
+      {
+        name: "Products",
+        key: "products",
+        route: "/analytics/products",
+        component: <Sales />,
+      },
+    ],
+  },
+  { type: "divider", key: "divider-1" },
+  {
     type: "collapse",
     name: "Dashboards",
     key: "dashboards",
