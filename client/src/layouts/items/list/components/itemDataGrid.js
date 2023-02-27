@@ -4,8 +4,8 @@ import LinearProgress from '@mui/material/LinearProgress';
 import ImageCell from "../../list/components/imageCell";
 
 const columns = [
-    { field: 'id', headerName: 'Id', width: 50 , hide: true, align:"center"},
-    { field: 'number', headerName: 'Number', width: 80 , headerAlign:'center',  align:"center"},
+    { field: 'id', headerName: 'Id', width: 50 , hide: true, align:"center", type: "number"},
+    { field: 'number', headerName: 'Number', width: 80 , headerAlign:'center',  align:"center", type: "number"},
     { field: 'image', headerName: 'Image', width: 100 , headerAlign:'center', align:"center",
         renderCell: ({ value, row } ) => (
             <ImageCell image={value} name={row.title} />
@@ -13,10 +13,10 @@ const columns = [
     },
     { field: 'title', headerName: 'Title', width: 150 , headerAlign:'center'},
     { field: 'watcher', headerName: 'Seller', width: 80, headerAlign:'center' },
-    { field: 'price', headerName: 'Price', width: 100, align:"right", headerAlign:'center'},
-    { field: 'shippingPrice', headerName: 'Shipping Price', width: 150, align:"right", headerAlign:'center' },
-    { field: 'quantityAvailable', headerName: 'Quantity Available', width: 150, align:"right", headerAlign:'center' },
-    { field: 'quantitySold', headerName: 'Solid Quantity', width: 150, align:"right", headerAlign:'center' },
+    { field: 'price', headerName: 'Price', width: 100, align:"right", headerAlign:'center', type:"number"},
+    { field: 'shippingPrice', headerName: 'Shipping Price', width: 150, align:"right", headerAlign:'center', type:"number" },
+    { field: 'quantityAvailable', headerName: 'Quantity Available', width: 150, align:"right", headerAlign:'center', type:"number" },
+    { field: 'quantitySold', headerName: 'Solid Quantity', width: 150, align:"right", headerAlign:'center', type:"number" },
     { field: 'simpleVariation', headerName: 'Simple / Variation', width: 150, align:"right", headerAlign:'center' },
     { field: 'condition', headerName: 'Condition', headerAlign:'center' },
 ];
