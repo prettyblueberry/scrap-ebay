@@ -76,7 +76,7 @@ import profilePicture from "assets/images/team-3.jpg";
 
 //customized components
 import Dashboard from "layouts/dashboard";
-import SellerList from "layouts/sellers/list";
+import SellerList from "layouts/sellers/analytics";
 import ItemList from "layouts/items/list";
 
 

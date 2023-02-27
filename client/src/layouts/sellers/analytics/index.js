@@ -31,11 +31,11 @@ import Footer from "examples/Footer";
 import Grid from "@mui/material/Grid";
 
 
-import SellerDataGrid from "layouts/sellers/list/components/sellerDataGrid";
+import SellerDataGrid from "layouts/sellers/analytics/components/sellerDataGrid";
 import VerticalBarChart from "../../../examples/Charts/BarCharts/VerticalBarChart";
 import verticalBarChartData from "../../pages/charts/data/verticalBarChartData";
 
-import SellerDataGridDays from "layouts/sellers/list/components/VerticalBarChart/sellerDataGridDays";
+import SellerDataGridDays from "layouts/sellers/analytics/components/VerticalBarChart/sellerDataGridDays";
 
 const rows = [
   {

@@ -15,9 +15,9 @@ Coded by www.creative-tim.com
 
 /* eslint-disable react/prop-types */
 // ProductsList page components
-import IdCell from "layouts/sellers/list/components/IdCell";
-import DefaultCell from "layouts/sellers/list/components/DefaultCell";
-import CustomerCell from "layouts/sellers/list/components/CustomerCell";
+import IdCell from "layouts/sellers/analytics/components/IdCell";
+import DefaultCell from "layouts/sellers/analytics/components/DefaultCell";
+import CustomerCell from "layouts/sellers/analytics/components/CustomerCell";
 
 // Images
 import team1 from "assets/images/team-1.jpg";
