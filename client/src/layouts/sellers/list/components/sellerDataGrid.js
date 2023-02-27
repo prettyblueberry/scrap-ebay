@@ -6,13 +6,16 @@ const columns = [
     { field: 'id', headerName: 'Id', width: 50 , hide: true, align:"center"},
     { field: 'login', headerName: 'Login', width: 80 , headerAlign:'center',  align:"center"},
     { field: 'seller', headerName: 'Name', width: 100 , headerAlign:'center',  align:"center"},
-    { field: 'description', headerName: 'Description', width: 150 , headerAlign:'center'},
-    { field: 'soldLast30', headerName: 'SoldIn30D', width: 100, headerAlign:'center' },
-    { field: 'soldLast7', headerName: 'SoldIn7D', width: 100, align:"right", headerAlign:'center'}
+    { field: 'description', headerName: 'Desc', width: 80 , headerAlign:'center'},
+    { field: 'soldLast1', headerName: 'SoldIn1D', width: 100, align:"right", headerAlign:'center', type:"number"},
+    { field: 'soldLast7', headerName: 'SoldIn7D', width: 100, align:"right", headerAlign:'center', type: "number"},
+    { field: 'soldLast30', headerName: 'SoldIn30D', width: 100, align:"right", headerAlign:'center', type:"number" },
 ];
 
-function SellerDataGrid({ rows }) {
+function SellerDataGrid({ rows, setFilteredRows}) {
     const [pageSize, setPageSize] = React.useState(10);
+    const [selectionModel, setSelectionModel] = React.useState(() => rows.map((r)=>r.id));
+
 
     return (
         <div style={{width: '100%'}}>
@@ -39,11 +42,16 @@ function SellerDataGrid({ rows }) {
 
               pageSize={pageSize}
               onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-              rowsPerPageOptions={[10, 25, 50, 100]}
+              rowsPerPageOptions={[25, 50, 100]}
               pagination
               autoHeight
               checkboxSelection
-                // loading
+              selectionModel={selectionModel}
+              onSelectionModelChange={(changed) => {
+                  setSelectionModel(changed);
+                  setFilteredRows(rows.filter((r)=>changed.includes(r.id) ));
+              }}
+              // loading
             />
         </div>
     );
