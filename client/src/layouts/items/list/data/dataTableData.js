@@ -23,29 +23,45 @@ import CustomerCell from "layouts/sellers/list/components/CustomerCell";
 import team1 from "assets/images/team-1.jpg";
 import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
-import team4 from "assets/images/team-4.jpg";
-import team5 from "assets/images/team-5.jpg";
-import ivana from "assets/images/ivana-squares.jpg";
-
 const dataTableData = {
   columns: [
     { Header: "id", accessor: "id", Cell: ({ value }) => <IdCell id={value} /> },
-
     {
-      Header: "seller",
-      accessor: "seller",
+      Header: "number",
+      accessor: "number",
+      Cell: ({ value }) => <DefaultCell value={value} />
+    }, {
+      Header: "title",
+      accessor: "title",
+      Cell: ({ value }) => <DefaultCell value={value} />
+    },{
+      Header: "watcher",
+      accessor: "watcher",
       Cell: ({value:{name, image}}) => (
-          <CustomerCell image={image} color={"dark"} name={name} />
+          <CustomerCell image={image} color={"primary"} name={name} />
       ),
     },
     {
-      Header: "sold in 30 days",
-      accessor: "sold30",
+      Header: "price",
+      accessor: "price",
       Cell: ({ value }) => <DefaultCell value={value} />
     },
     {
-      Header: "sold in 7 days",
-      accessor: "sold7",
+      Header: "shipping price",
+      accessor: "shippingPrice",
+      Cell: ({ value }) => <DefaultCell value={value} />
+    }, {
+      Header: "quantity available",
+      accessor: "quantityAvailable",
+      Cell: ({ value }) => <DefaultCell value={value} />
+    },{
+      Header: "solid quantity",
+      accessor: "quantitySold",
+      Cell: ({ value }) => <DefaultCell value={value} />
+    },
+    {
+      Header: "condition",
+      accessor: "condition",
       Cell: ({ value }) => <DefaultCell value={value} />
     }
   ],
@@ -53,24 +69,30 @@ const dataTableData = {
   rows: [
     {
       id: "#10421",
+      number: "123",
+      product: { name: 'aaa', image:team1},
       seller: { name: 'aaa', image:team1},
-      sold30: "$ 123",
-      sold7: "$ 123"
+      title: "ABD",
+      watcher: "Abacas",
+      price: "$123"
     },
     {
       id: "#10422",
+      product: { name: 'bbb', image:team2},
       seller: { name: 'bbb', image:team2},
       sold30: "$ 234",
       sold7: "$ 234"
     },
     {
       id: "#10423",
+      product: { name: 'ccc', image:team3},
       seller: { name: 'ccc', image:team3},
       sold30: "$ 345",
       sold7: "$ 345"
     },
     {
       id: "#10423",
+      product: { name: 'ccc'},
       seller: { name: 'ccc'},
       sold30: "$ 345",
       sold7: "$ 345"

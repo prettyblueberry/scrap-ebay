@@ -26,39 +26,84 @@ import MDButton from "components/MDButton";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-import DataTable from "examples/Tables/DataTable";
 
-// Data
-import dataTableData from "layouts/sellers/list/data/dataTableData";
+import Grid from "@mui/material/Grid";
+
+import SellerDataGrid from "layouts/sellers/list/components/sellerDataGrid";
+
+const rows = [
+  {
+    id: 1,
+    login: 'as_bb',
+    seller: '123',
+    description: 'World',
+    soldLast30: "213",
+    soldLast7: 123,
+    dataSaved: '3/11/2022'
+  },
+  {
+    id: 2,
+    login: 'as_xx',
+    seller: '263',
+    description: 'World',
+    soldLast30: "213",
+    soldLast7: 123,
+    dataSaved: '3/11/2022'
+  },
+  {
+    id: 3,
+    login: 'as_er',
+    seller: '25',
+    description: 'World',
+    soldLast30: "213",
+    soldLast7: 123,
+    dataSaved: '3/11/2022'
+  },
+  {
+    id: 4,
+    login: 'as_wr',
+    seller: '345',
+    description: 'World',
+    soldLast30: "213",
+    soldLast7: 123,
+    dataSaved: '3/11/2022'
+  },
+];
 
 function SellerList() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox my={3}>
-        <MDBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
-          <MDButton variant="gradient" color="info">
-            new seller
-          </MDButton>
-          <MDBox display="flex">
-            <MDBox ml={1}>
-              <MDButton variant="outlined" color="dark">
-                <Icon>description</Icon>
-                &nbsp;export excel
-              </MDButton>
-            </MDBox>
-          </MDBox>
-        </MDBox>
         <Card>
           <MDBox p={3} lineHeight={1}>
-            <MDTypography variant="h5" fontWeight="medium">
-              Sellers
-            </MDTypography>
+            <MDBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={0}>
+              <MDTypography variant="h5" fontWeight="medium">
+                Sellers
+              </MDTypography>
+              <MDBox display="flex">
+                <MDBox>
+                  <MDButton variant="outlined" color="dark">
+                    <Icon>description</Icon>
+                    &nbsp;export excel
+                  </MDButton>
+                  <MDButton variant="gradient" color="info" ml={2}>
+                    new seller
+                  </MDButton>
+                </MDBox>
+              </MDBox>
+            </MDBox>
             <MDTypography variant="button" color="text">
               Analysis Table Data
             </MDTypography>
           </MDBox>
-          <DataTable table={dataTableData} canSearch />
+          <MDBox>
+            <Grid container>
+              <Grid item md={6}>
+                <SellerDataGrid rows={ rows } />
+              </Grid>
+            </Grid>
+          </MDBox>
         </Card>
       </MDBox>
       <Footer />

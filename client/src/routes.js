@@ -77,6 +77,7 @@ import profilePicture from "assets/images/team-3.jpg";
 //customized components
 import Dashboard from "layouts/dashboard";
 import SellerList from "layouts/sellers/list";
+import ItemList from "layouts/items/list";
 
 
 const routes = [
@@ -118,6 +119,15 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "Items",
+    key: "items",
+    icon: <Icon fontSize="medium">apps</Icon>,
+    noCollapse: true,
+    route: "/items",
+    component: <ItemList />,
+  },
+  {
+    type: "collapse",
     name: "Analytics",
     key: "analytics",
     icon: <Icon fontSize="medium">analytics</Icon>,
@@ -127,12 +137,6 @@ const routes = [
         key: "sellers",
         route: "/analytics/sellers",
         component: <SellerList />,
-      },
-      {
-        name: "Products",
-        key: "products",
-        route: "/analytics/products",
-        component: <Sales />,
       },
     ],
   },
