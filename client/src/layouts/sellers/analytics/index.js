@@ -133,7 +133,7 @@ function SellerList() {
             <MDBox p={3} lineHeight={1}>
               <MDBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={0}>
                 <MDTypography variant="h5" fontWeight="medium">
-                  Sellers
+                  Analytics
                 </MDTypography>
                 <MDBox display="flex">
                   <MDBox>

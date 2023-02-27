@@ -579,7 +579,7 @@ function DefaultNavbar({ routes, brand, transparent, light, action }) {
 
 // Declaring default props for DefaultNavbar
 DefaultNavbar.defaultProps = {
-  brand: "Material Dashboard PRO",
+  brand: "Ebay Data Analytics",
   transparent: false,
   light: false,
   action: false,
