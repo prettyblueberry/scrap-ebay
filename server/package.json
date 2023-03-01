@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "apify-client": "^2.6.3",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "morgan": "^1.10.0",
