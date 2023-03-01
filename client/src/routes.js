@@ -78,6 +78,9 @@ import profilePicture from "assets/images/team-3.jpg";
 import Dashboard from "layouts/dashboard";
 import SellerList from "layouts/sellers/analytics";
 import ItemList from "layouts/items/list";
+import LoadManage from "layouts/load";
+import SellersManage from "layouts/sellers/manage";
+import UsersManage from "layouts/users";
 
 
 const routes = [
@@ -108,14 +111,15 @@ const routes = [
     ],
   },
   { type: "divider", key: "divider-0" },
+  { type: "title", title: "Explorer", key: "title-explorer" },
   {
     type: "collapse",
-    name: "Dashboard",
-    key: "dashboard",
-    icon: <Icon fontSize="medium">dashboard</Icon>,
+    name: "Analytics",
+    key: "analytics",
+    icon: <Icon fontSize="medium">analytics</Icon>,
     noCollapse: true,
-    route: "/dashboard",
-    component: <Dashboard />,
+    route:"/analytics",
+    component: <SellerList />,
   },
   {
     type: "collapse",
@@ -126,21 +130,47 @@ const routes = [
     route: "/items",
     component: <ItemList />,
   },
+  // {
+  //   type: "collapse",
+  //   name: "Dashboard",
+  //   key: "dashboard",
+  //   icon: <Icon fontSize="medium">dashboard</Icon>,
+  //   noCollapse: true,
+  //   route: "/dashboard",
+  //   component: <Dashboard />,
+  // },
+
+  { type: "divider", key: "divider-1" },
+  { type: "title", title: "Manage", key: "title-manage" },
   {
     type: "collapse",
-    name: "Analytics",
-    key: "analytics",
-    icon: <Icon fontSize="medium">analytics</Icon>,
-    collapse: [
-      {
-        name: "Sellers",
-        key: "sellers",
-        route: "/analytics/sellers",
-        component: <SellerList />,
-      },
-    ],
+    name: "Load",
+    key: "load",
+    icon: <Icon fontSize="medium">download</Icon>,
+    noCollapse: true,
+    route: "/load",
+    component: <LoadManage />,
   },
-  { type: "divider", key: "divider-1" },
+  {
+    type: "collapse",
+    name: "Sellers",
+    key: "sellersManage",
+    icon: <Icon fontSize="medium">sellers</Icon>,
+    noCollapse: true,
+    route: "/sellers/manage",
+    component: <SellersManage />,
+  },
+  {
+    type: "collapse",
+    name: "Users",
+    key: "usersManage",
+    icon: <Icon fontSize="medium">manage</Icon>,
+    noCollapse: true,
+    route: "/users/manage",
+    component: <UsersManage />,
+  },
+  { type: "divider", key: "divider-2" },
+  { type: "title", title: "Samples", key: "title-pages" },
   {
     type: "collapse",
     name: "Dashboards",
@@ -389,7 +419,7 @@ const routes = [
       },
     ],
   },
-  { type: "divider", key: "divider-2" },
+  { type: "divider", key: "divider-3" },
   { type: "title", title: "Docs", key: "title-docs" },
   {
     type: "collapse",
