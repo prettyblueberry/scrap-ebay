@@ -1,0 +1,11 @@
+{
+  "name": "scrap-ebay-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "blueberry",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
