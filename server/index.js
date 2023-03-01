@@ -1,7 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import path from "path";
-import "./src/helpers/global.js";
+import "./src/helpers/global.helper.js";
 import apiRouter from "./src/router/index.js";
 import cors from 'cors';
 
