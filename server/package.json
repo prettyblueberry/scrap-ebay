@@ -8,5 +8,6 @@
   "dependencies": {
     "express": "^4.18.2",
     "node-querybuilder": "^2.1.1"
-  }
+  },
+  "type": "module"
 }
