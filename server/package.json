@@ -10,7 +10,14 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "morgan": "^1.10.0",
-    "node-querybuilder": "^2.1.1"
+    "node-querybuilder": "^2.1.1",
+    "nodemon": "^2.0.20"
+  },
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "nodemonConfig": {
+    "ignore": [ "test/*", "dist/*"]
   },
   "type": "module"
 }

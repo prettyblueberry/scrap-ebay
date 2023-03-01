@@ -5,6 +5,7 @@ import "./src/helpers/global.helper.js";
 import apiRouter from "./src/router/index.js";
 import cors from 'cors';
 
+const port = 3001;
 const app = express()
 
 app.use(morgan("dev"));
@@ -19,6 +20,6 @@ app.use(function(req, res){
 });
 
 
-app.listen(3000, ()=>{
-    console.log("server is running on port 3000.");
+app.listen(port, ()=>{
+    console.log("server is running on port " + port + ".");
 });
