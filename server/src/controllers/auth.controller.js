@@ -1,3 +1,4 @@
+import HS from "http-status-codes";
 import userModel from "../models/user.model.js";
 
 const verify = (email, reqPwd, dbPwd) =>{
@@ -6,10 +7,10 @@ const verify = (email, reqPwd, dbPwd) =>{
 
 const signIn = ({email, pwd}, req, res) => {
         userModel.findByEmail(email, (user)=>{
-            if(!user) res.status(401).json({reason: "email"});
+            if(!user) res.status(HS.UNAUTHORIZED).json({reason: "email"});
             const v = verify(email, pwd, user.pwd)
-            if(v) res.status(200).json({token: "12312123"});
-            else res.status(401).json({reason: "pwd"})
+            if(v) res.status(HS.OK).json({ auth_token: "12312123" });
+            else res.status(HS.UNAUTHORIZED).json({ reason: "pwd" })
         })
     };
 
