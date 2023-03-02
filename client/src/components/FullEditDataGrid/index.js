@@ -22,16 +22,19 @@ import {
 } from "@mui/x-data-grid";
 
 function DefaultToolbar(props) {
-    const {internalRows, setInternalRows, setRowModesModel } = props;
+    const {internalRows, setInternalRows, setRowModesModel, createRowData } = props;
 
     const handleClick = () => {
-        const newId = Math.max(...internalRows.map((r)=>r.id * 1)) + 1;
+        const newData = createRowData(internalRows);
+        newData.isNew = true;
+        if(!newData.hasOwnProperty("id"))
+            newData.newId = Math.max(...internalRows.map((r)=>r.id * 1)) + 1;
         setInternalRows((oldRows) => {
-            return [...oldRows, { id: newId, name: "", age: "", isNew: true }]
+            return [...oldRows, newData]
         });
         setRowModesModel((oldModel) => ({
             ...oldModel,
-            [newId]: { mode: GridRowModes.Edit, fieldToFocus: "name" }
+            [newData.id]: { mode: GridRowModes.Edit, fieldToFocus: "name" }
         }));
     };
 
@@ -50,7 +53,7 @@ function DefaultToolbar(props) {
 }
 
 
-function FullFeaturedCrudGrid({columns, rows, defaultPageSize, onSaveRow, onDeleteRow, ...props}) {
+function FullFeaturedCrudGrid({columns, rows, defaultPageSize, onSaveRow, onDeleteRow, createRowData, ...props}) {
     const [internalRows, setInternalRows] = React.useState(rows);
     const [rowModesModel, setRowModesModel] = React.useState(
         {}
@@ -168,7 +171,7 @@ function FullFeaturedCrudGrid({columns, rows, defaultPageSize, onSaveRow, onDele
                     Toolbar: DefaultToolbar
                 }}
                 componentsProps={{
-                    toolbar: { internalRows, setInternalRows, setRowModesModel }
+                    toolbar: { internalRows, setInternalRows, setRowModesModel, createRowData }
                 }}
                 experimentalFeatures={{ newEditingApi: true }}
 
@@ -187,6 +190,10 @@ FullFeaturedCrudGrid.defaultProps = {
     },
     onDeleteRow: (id, oldRow, rows) => {
         console.log("delete row", oldRow);
+    },
+    createRowData: (rows) => {
+        const newId = Math.max(...rows.map((r)=>r.id * 1)) + 1;
+        return {id: newId}
     },
 
     initialState: {
