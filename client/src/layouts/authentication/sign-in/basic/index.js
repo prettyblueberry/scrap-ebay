@@ -21,13 +21,7 @@ import { Link } from "react-router-dom";
 // @mui material components
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
-import Grid from "@mui/material/Grid";
-import MuiLink from "@mui/material/Link";
 
-// @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
 
 // Material Dashboard 2 PRO React components
 import MDBox from "components/MDBox";
@@ -42,19 +36,23 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 //custom
+import {useNavigate} from "react-router-dom";
 import authCon from "controllers/auth";
+import MDAlert from "../../../../components/MDAlert";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
+  const navigate = useNavigate();
+  const [unauthorized, setUnauthorized] = useState(false);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
   const handleSignInButton = () => {
-    authCon.signIn(email, pwd).then(()=>{
-
-    }).catch(()=>{
-
+    authCon.signIn(email, pwd).then((res) => {
+      navigate('/analytics');
+    }).catch((err)=>{
+      setUnauthorized(true);
     });
   };
 
@@ -77,6 +75,15 @@ function Basic() {
           </MDTypography>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
+          {
+            unauthorized === true ?
+              <MDAlert color="primary" dismissible>
+                <MDTypography variant="body2" color="white">
+                Wrong email or password.
+                </MDTypography>
+              </MDAlert> : ''
+          }
+
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <MDInput type="email" label="Email" fullWidth value={email} onChange={(evt)=>{setEmail(evt.target.value)}} />
