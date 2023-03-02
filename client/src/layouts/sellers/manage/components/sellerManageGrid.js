@@ -1,28 +1,55 @@
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import FullEditDataGrid from "../../../../components/FullEditDataGrid";
 
 export default function SellerManageGrid() {
     return (
-        <div style={{ height: 300, width: '100%' }}>
-            <DataGrid
-                editMode="row"
-                rows={rows}
-                columns={columns}
-                experimentalFeatures={{ newEditingApi: true }}
-            />
-        </div>
+        <FullEditDataGrid columns={columns} rows={rows} />
     );
 }
 
 const columns = [
-    { field: 'id', headerName: 'Id', width: 50 , hide: true, align:"center", editable: true},
-    { field: 'login', headerName: 'Login', width: 80 , headerAlign:'center',  align:"center", editable: true},
-    { field: 'seller', headerName: 'Name', width: 100 , headerAlign:'center',  align:"center", editable: true},
-    { field: 'description', headerName: 'Desc', width: 80 , headerAlign:'center', editable: true},
+    { field: 'no', headerName: 'No', width: 50 , align:"center", type:'number', editable: false},
+    { field: 'id', headerName: 'Id', width: 50 , hide: true, align:"center", type:'number', editable: true},
+    { field: 'login', headerName: 'Login', width: 100 , headerAlign:'center', type:'text',  align:"center", editable: true},
+    { field: 'title', headerName: 'Title', width: 150 , headerAlign:'center', type: 'text',  align:"center", editable: true},
+    { field: 'desc', headerName: 'Description', width: 250,  headerAlign:'center', type: 'text', editable: true},
+    { field: 'dateCreated', headerName: 'DateCreated', width:150,  headerAlign:'center', type:'date', editable: true, align: "center"},
 ];
 
 const rows = [
-    {id: "123", login: "qqwe", seller: "werwer", description: "werwer"},
-    {id: "234", login: "qqwe", seller: "werwer", description: "werwer"},
-    {id: "456", login: "qqwe", seller: "werwer", description: "werwer"}
+    {
+        no: 1,
+        id: 1,
+        login: "asdf",
+        title: 25,
+        desc: "wewefgw",
+        dateCreated: new Date(),
+    },
+    {
+        no: 2,
+        id: 2,
+        login: "asdf",
+        title: 25,
+        desc: "wewefgw",
+        dateCreated: new Date(),
+    },
+    {
+        no: 3,
+        id: 3,
+        login: "asdf",
+        title: 25,
+        desc: "wewefgw",
+        dateCreated: new Date(),
+    },
+    {
+        no: 5,
+        id: 5,
+        login: "asdf",
+        title: 25,
+        desc: "wewefgw",
+        dateCreated: new Date(),
+    },
 ];
+
+
+
