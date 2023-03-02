@@ -128,7 +128,7 @@ const routes = [
     icon: <Icon fontSize="medium">apps</Icon>,
     noCollapse: true,
     route: "/items",
-    component: <ItemList />,
+    component: <ItemList filter={{loadDatetime: "latest"}}/>,
   },
   // {
   //   type: "collapse",
@@ -170,7 +170,7 @@ const routes = [
     component: <UsersManage />,
   },
   { type: "divider", key: "divider-2" },
-  { type: "title", title: "Samples", key: "title-pages" },
+  { type: "title", title: "Samples", key: "title-samples" },
   {
     type: "collapse",
     name: "Dashboards",

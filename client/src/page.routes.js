@@ -52,7 +52,7 @@ const pageRoutes = [
       {
         name: "items",
         icon: <Icon>dashboard</Icon>,
-        route: "/items/list",
+        route: "/items",
       },
       {
         name: "analytics",
