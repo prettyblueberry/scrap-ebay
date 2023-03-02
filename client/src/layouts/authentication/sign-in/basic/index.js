@@ -45,14 +45,14 @@ function Basic() {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const navigate = useNavigate();
-  const [unauthorized, setUnauthorized] = useState(false);
+  const [unauthorized, setUnauthorized] = useState({status: false, reason: ""});
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
   const handleSignInButton = () => {
     authCon.signIn(email, pwd).then((res) => {
       navigate('/analytics');
     }).catch((err)=>{
-      setUnauthorized(true);
+      setUnauthorized({status: true, reason: err.response.data.reason});
     });
   };
 
@@ -76,10 +76,12 @@ function Basic() {
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
           {
-            unauthorized === true ?
+            unauthorized.status === true ?
               <MDAlert color="primary" dismissible>
                 <MDTypography variant="body2" color="white">
-                Wrong email or password.
+                  {
+                    unauthorized.reason === "email" ? "Unregistered email address." : "Password is incorrect."
+                  }
                 </MDTypography>
               </MDAlert> : ''
           }
