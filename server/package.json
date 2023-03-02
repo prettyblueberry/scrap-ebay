@@ -17,7 +17,10 @@
     "dev": "nodemon index.js"
   },
   "nodemonConfig": {
-    "ignore": [ "test/*", "dist/*"]
+    "ignore": [
+      "test/*",
+      "dist/*"
+    ]
   },
   "type": "module"
 }
