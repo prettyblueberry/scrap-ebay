@@ -3,8 +3,6 @@
 // translate to javascript and custom it by Blueberry 03/02/2023
 
 import * as React from "react";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
@@ -12,46 +10,10 @@ import CancelIcon from "@mui/icons-material/Close";
 import {
     GridRowModes,
     DataGrid,
-    GridToolbarContainer,
-    GridToolbarColumnsButton,
-    GridToolbarDensitySelector,
-    GridToolbarQuickFilter,
-    GridToolbarFilterButton,
-    GridToolbarExport,
     GridActionsCellItem,
 } from "@mui/x-data-grid";
 
-function DefaultToolbar(props) {
-    const {internalRows, setInternalRows, setRowModesModel, createRowData } = props;
-
-    const handleClick = () => {
-        const newData = createRowData(internalRows);
-        newData.isNew = true;
-        if(!newData.hasOwnProperty("id"))
-            newData.newId = Math.max(...internalRows.map((r)=>r.id * 1)) + 1;
-        setInternalRows((oldRows) => {
-            return [...oldRows, newData]
-        });
-        setRowModesModel((oldModel) => ({
-            ...oldModel,
-            [newData.id]: { mode: GridRowModes.Edit, fieldToFocus: "name" }
-        }));
-    };
-
-    return (
-        <GridToolbarContainer>
-            <GridToolbarColumnsButton />
-            <GridToolbarFilterButton />
-            <GridToolbarDensitySelector />
-            <GridToolbarExport />
-            <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-                Add record
-            </Button>
-            <GridToolbarQuickFilter />
-        </GridToolbarContainer>
-    );
-}
-
+import DefaultToolbar from "./DefaultToolbar";
 
 function FullFeaturedCrudGrid({columns, rows, defaultPageSize, onSaveRow, onDeleteRow, createRowData, ...props}) {
     const [internalRows, setInternalRows] = React.useState(rows);
@@ -171,7 +133,7 @@ function FullFeaturedCrudGrid({columns, rows, defaultPageSize, onSaveRow, onDele
                     Toolbar: DefaultToolbar
                 }}
                 componentsProps={{
-                    toolbar: { internalRows, setInternalRows, setRowModesModel, createRowData }
+                    toolbar: { rows: internalRows, setRows: setInternalRows, setRowModesModel, createRowData, columns }
                 }}
                 experimentalFeatures={{ newEditingApi: true }}
 
@@ -190,10 +152,6 @@ FullFeaturedCrudGrid.defaultProps = {
     },
     onDeleteRow: (id, oldRow, rows) => {
         console.log("delete row", oldRow);
-    },
-    createRowData: (rows) => {
-        const newId = Math.max(...rows.map((r)=>r.id * 1)) + 1;
-        return {id: newId}
     },
 
     initialState: {
