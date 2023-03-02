@@ -41,10 +41,22 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
+//custom
+import authCon from "controllers/auth";
+
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
+  const [email, setEmail] = useState("");
+  const [pwd, setPwd] = useState("");
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const handleSignInButton = () => {
+    authCon.signIn(email, pwd).then(()=>{
+
+    }).catch(()=>{
+
+    });
+  };
 
   return (
     <BasicLayout image={bgImage}>
@@ -67,10 +79,10 @@ function Basic() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput type="email" label="Email" fullWidth value={email} onChange={(evt)=>{setEmail(evt.target.value)}} />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput type="password" label="Password" fullWidth value={pwd} onChange={(evt)=>{setPwd(evt.target.value)}}  />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -85,12 +97,9 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <Link to={"/analytics"}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton variant="gradient" color="info" fullWidth onClick={handleSignInButton}>
                 sign in
               </MDButton>
-              </Link>
-
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
