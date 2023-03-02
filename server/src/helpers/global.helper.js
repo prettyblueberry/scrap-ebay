@@ -5,36 +5,36 @@ global.routeRestful = (path, controller, router) => {
             return controller.findById(req.params.id, req, res);
         });
 
-    //findOne
-    if(controller.hasOwnProperty("findOne"))
-        router.get(path, function(req, res){
-            return controller.findOne(req.query, req, res);
-        });
-
     //search
     if(controller.hasOwnProperty("search"))
         router.get(path, function(req, res){
             return controller.search(req.query, req, res);
         });
 
+    //save
+    if(controller.hasOwnProperty("saveOne"))
+        router.patch(path, function(req, res){
+            return controller.saveOne(req.body, req, res);
+        });
+
     //create
-    if(controller.hasOwnProperty("create"))
+    if(controller.hasOwnProperty("createOne"))
         router.post(path, function(req, res){
-            return controller.create(req.body, req, res);
+            return controller.createOne(req.body, req, res);
         });
 
     //update
-    if(controller.hasOwnProperty("update"))
+    if(controller.hasOwnProperty("updateOne"))
         router.put(path + "/:id", function(req, res){
-            return controller.update({
+            return controller.updateOne({
                 id: req.params.id,
                 body: req.body
             },  req, res)
         });
 
     //delete
-    if(controller.hasOwnProperty("delete"))
+    if(controller.hasOwnProperty("deleteOne"))
         router.delete(path+ "/:id", function(req, res){
-            return controller.delete(req.params.id, req, res);
+            return controller.deleteOne(req.params.id, req, res);
         });
 }

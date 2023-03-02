@@ -14,12 +14,17 @@ import {
 } from "@mui/x-data-grid";
 
 import DefaultToolbar from "./DefaultToolbar";
+import {useEffect} from "react";
 
 function FullFeaturedCrudGrid({columns, rows, defaultPageSize, onSaveRow, onDeleteRow, createRowData, ...props}) {
     const [internalRows, setInternalRows] = React.useState(rows);
     const [rowModesModel, setRowModesModel] = React.useState(
         {}
     );
+
+    useEffect(()=>{
+        setInternalRows(rows);
+    }, [rows]);
 
     const handleRowEditStart = (
         params,
