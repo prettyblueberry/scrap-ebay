@@ -7,6 +7,7 @@ const LoadModel = {
     getWhere : function (where = {}, callback) {
         dbCon().then((qb)=>{
             if(Object.keys(where).length > 0){
+                this.joinOther(qb);
                 qb.get_where(tblName, where, (err, res)=>{
                     if(err) {
                         const lastQuery = qb.last_query();
@@ -17,6 +18,7 @@ const LoadModel = {
                 });
                 return;
             }
+            this.joinOther(qb);
             qb.get(tblName, (err, res)=>{
                 if(err) {
                     const lastQuery = qb.last_query();
@@ -44,6 +46,17 @@ const LoadModel = {
                 }
             })
         })
+    },
+    joinOther: function(qb){
+        qb.select("loads.*", false);
+        //special
+        qb.select([
+            "sellers.login AS sellerLogin",
+            "sellers.title AS sellerTitle",
+            "sellers.desc AS sellerDesc",
+        ], false)
+        qb.join('sellers', "sellers.id = sellerId");
+        return qb;
     },
 
     inputRow: function (row, callback) {

@@ -27,6 +27,33 @@ const ItemsModel = {
             });
         })
     },
+    getLatest : function (where = {}, callback) {
+        dbCon().then((qb)=>{
+            if(Object.keys(where).length > 0){
+                qb.order_by("datetimeCreated", "DESC")
+                    .group_by(["itemNumber", "seller"])
+                    .get_where(tblName, where, (err, res)=>{
+                    if(err) {
+                        const lastQuery = qb.last_query();
+                        console.error(err, lastQuery);
+                        return callback(qb, err);
+                    }
+                    callback(qb, null, res);
+                });
+                return;
+            }
+            qb.order_by("datetimeCreated", "DESC")
+                .group_by(["itemNumber", "seller"])
+                .get(tblName, (err, res)=>{
+                if(err) {
+                    const lastQuery = qb.last_query();
+                    console.error(err, lastQuery);
+                    callback(qb, err);
+                }
+                callback(qb, null, res);
+            });
+        })
+    },
     findRowById : function (id, callback) {
         dbCon().then((qb)=>{
             qb.limit(1).get_where(tblName, { id }, (err, res)=>{

@@ -1,24 +1,38 @@
 import * as React from 'react';
-import { DataGrid, GridToolbar  } from '@mui/x-data-grid';
+import {DataGrid, GridActionsCellItem, GridToolbar} from '@mui/x-data-grid';
 import LinearProgress from '@mui/material/LinearProgress';
 import ImageCell from "../../list/components/imageCell";
+import MDBox from "../../../../components/MDBox";
+import LinkIcon from "@mui/icons-material/LinkOutlined";
 
 const columns = [
     { field: 'id', headerName: 'Id', width: 50 , hide: true, align:"center", type: "number"},
-    { field: 'number', headerName: 'Number', width: 80 , headerAlign:'center',  align:"center", type: "number"},
-    { field: 'image', headerName: 'Image', width: 100 , headerAlign:'center', align:"center",
-        renderCell: ({ value, row } ) => (
-            <ImageCell image={value} name={row.title} />
+    { field: 'itemNumber', headerName: 'Number', width: 200 , headerAlign:'center',  align:"center", type: "string"},
+    { field: 'image', headerName: 'Image', width: 150 , headerAlign:'center', align:"center",
+        renderCell: ({ value, row }) => (
+            <MDBox m={3}><ImageCell image={value} name={row.title} /></MDBox>
         ),
     },
     { field: 'title', headerName: 'Title', width: 150 , headerAlign:'center'},
-    { field: 'watcher', headerName: 'Seller', width: 80, headerAlign:'center' },
-    { field: 'price', headerName: 'Price', width: 100, align:"right", headerAlign:'center', type:"number"},
-    { field: 'shippingPrice', headerName: 'Shipping Price', width: 150, align:"right", headerAlign:'center', type:"number" },
-    { field: 'quantityAvailable', headerName: 'Quantity Available', width: 150, align:"right", headerAlign:'center', type:"number" },
-    { field: 'quantitySold', headerName: 'Solid Quantity', width: 150, align:"right", headerAlign:'center', type:"number" },
-    { field: 'simpleVariation', headerName: 'Simple / Variation', width: 150, align:"right", headerAlign:'center' },
-    { field: 'condition', headerName: 'Condition', headerAlign:'center' },
+    { field: 'seller', headerName: 'Seller', width: 200, headerAlign:'center' },
+    { field: 'priceWithCurrency', headerName: 'Price', width: 100, align:"right", headerAlign:'center', type:"number"},
+    { field: 'available', headerName: 'Quantity Available', width: 150, align:"right", headerAlign:'center', type:"number" },
+    { field: 'Sold', headerName: 'Solid Quantity', width: 150, align:"right", headerAlign:'center', type:"number" },
+    { field: 'itemLocation', headerName: 'ItemLocation', width: 150, align:"right", headerAlign:'center' },
+    { field: 'url', headerName: 'Link', width: 100,  headerAlign:'center', type: 'text', editable: false, cellClassName: "actions", align: "center",
+        renderCell: ({ value }) => {
+            return (
+                <a href={value} target={"_blank"}>
+                    <GridActionsCellItem
+                        icon={<LinkIcon />}
+                        label="Link"
+                        color="inherit"
+                    />
+                </a>
+            )
+        }
+    },
+    { field: 'datetimeCreated', headerName: 'DatetimeCreated', width: 200,  headerAlign:'center' },
 ];
 
 function ItemDataGrid({ rows }) {

@@ -6,12 +6,13 @@ import scrapHelper from "../helpers/apify-ebay-scraper.helper.js";
 
 //get
 const search = (query, req, res) => {
-    loadModel.getWhere(query, (qb, err, sellers)=>{
+    loadModel.getWhere(query, (qb, err, loads)=>{
         qb.release();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
-        res.json(sellers);
+        res.json(loads);
     })
 }
+
 const maxItems = 5;
 let pendingCount = 0;
 let pendingError = 0;
@@ -71,29 +72,18 @@ const loadOneSeller = (s, maxItems, callback) => {
     })
 };
 
-//patch
-const saveOne = (body, req, res) => {
-    delete body["no"];
-    loadModel.inputRow(body, (qb, err, seller)=>{
-        qb.release();
-        if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
-        res.json(seller);
-    })
-}
-
 //delete
 const deleteOne = (id, req, res) => {
-    loadModel.deleteRow(id,(qb, err, oldSeller)=>{
+    loadModel.deleteRow(id,(qb, err, oldLoad)=>{
         qb.release();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
-        res.json(oldSeller);
+        res.json(oldLoad);
     });
 }
 
 export default {
     search,
     deleteOne,
-    saveOne,
     loadOneSeller,
     loadAllSellers
 }
