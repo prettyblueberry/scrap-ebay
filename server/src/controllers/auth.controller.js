@@ -1,14 +1,17 @@
 import HS from "http-status-codes";
 import userModel from "../models/user.model.js";
+import jwtHelper from "../helpers/jwt.helper.js";
 
 const verify = (email, reqPwd, dbPwd) =>{
     return reqPwd === dbPwd;
 }
 
 const signIn = ({email, pwd}, req, res) => {
-    verifyUser({ email }, pwd, ({status, data})=>{
+    verifyUser({ email }, pwd, ({status, data}) => {
         if(status === HS.OK) {
-            return res.json({auth_token: "123123", user: data})
+            const token = jwtHelper.generateToken(JSON.stringify(data));
+            const tokenHeaderKey = process.env.TOKEN_HEADER_KEY;
+            return res.json({ token: token, user: data, tokenHeaderKey})
         }
         res.status(status).json(data);
     });
@@ -37,6 +40,8 @@ const verifyUser = (where, pwd, callback) => {
         }
     })
 };
+
+
 
 const signOut = (req, res) => {
 

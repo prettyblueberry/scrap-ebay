@@ -8,9 +8,7 @@ const saveRow = (row) => {
 };
 
 const updatePassword = (currentPwd, newPwd) => {
-    const auth = JSON.parse(localStorage.getItem("auth"));
-    const id = auth.user.id;
-    return axios.patch(`/user/${id}/pwd`, {
+    return axios.patch(`/user/pwd`, {
         currentPwd,
         newPwd
     });

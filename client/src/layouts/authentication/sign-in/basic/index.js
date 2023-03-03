@@ -37,7 +37,7 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 //custom
 import {useNavigate} from "react-router-dom";
-import authCon from "controllers/auth";
+import authController from "controllers/auth";
 import MDAlert from "../../../../components/MDAlert";
 
 function Basic() {
@@ -49,7 +49,7 @@ function Basic() {
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
   const handleSignInButton = () => {
-    authCon.signIn(email, pwd).then((res) => {
+    authController.signIn(email, pwd).then((res) => {
       navigate('/analytics');
     }).catch((err)=>{
       setUnauthorized({status: true, reason: err.response.data.reason});

@@ -32,8 +32,8 @@ router.get('/item/latest', itemController.latest);
 routeRestful('/schedule', scheduleController, router);
 
 routeRestful('/user', userController, router);
-router.patch('/user/:id/pwd', (req, res)=>{
-    userController.updatePassword(req.params.id, req.body, req, res);
+router.patch('/user/pwd', (req, res)=>{
+    userController.updatePassword(req.body, req, res);
 });
 
 

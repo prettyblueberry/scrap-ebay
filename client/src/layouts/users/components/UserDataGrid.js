@@ -2,6 +2,7 @@ import * as React from 'react';
 import DeleteOnlyDataGrid from "../../../components/DeleteOnlyDataGrid";
 import { useEffect, useState } from "react";
 import userController from "../../../controllers/user";
+import authController from "../../../controllers/auth";
 
 export default function UserDataGrid() {
     const [rows, setRows] = useState([]);
@@ -14,7 +15,8 @@ export default function UserDataGrid() {
     }, []);
 
     const onDeleteRow = (id, oldRow, cRows) => {
-        const curUserId = JSON.parse(localStorage.getItem("auth")).user.id;
+        const auth = authController.getAuth();
+        const curUserId = auth.user.id;
         if(curUserId === id) {
             setRows([...rows]);
             return;

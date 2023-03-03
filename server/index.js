@@ -5,8 +5,11 @@ import "./src/helpers/global.helper.js";
 import apiRouter from "./src/router/index.js";
 import cors from 'cors';
 import bodyParser from 'body-parser'
+import dotenv from 'dotenv';
+import {jwtSession} from "./src/middlewares/auth.middleware.js";
 import scheduleController from "./src/controllers/schedule.controller.js";
 
+dotenv.config();
 const port = 3001;
 const app = express()
 
@@ -19,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+app.use(jwtSession);
 //api router
 app.use('/api', apiRouter);
 
@@ -27,7 +31,6 @@ app.use(express.static('dist'))
 app.use(function(req, res){
     res.sendFile(path.resolve('./dist/index.html'));
 });
-
 
 app.listen(port, ()=>{
     console.log("server is running on port " + port + ".");

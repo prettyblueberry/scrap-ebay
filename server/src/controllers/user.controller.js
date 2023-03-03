@@ -30,11 +30,11 @@ const deleteOne = (id, req, res) => {
     });
 }
 
-const updatePassword = (id, body, req, res) => {
-    authController.verifyUser({ id }, body.currentPwd, ({status, data})=>{
+const updatePassword = (body, req, res) => {
+    authController.verifyUser({ id: req.jsession.id }, body.currentPwd, ({status, data})=>{
         if(status !== HS.OK) res.status(status).json(data);
 
-        userModel.updateRow({id: id, pwd: body.newPwd}, (qb, err, user)=>{
+        userModel.updateRow({id: req.jsession.id, pwd: body.newPwd}, (qb, err, user)=>{
             qb.release();
             if(err) {
                 const lastQuery = qb.last_query();

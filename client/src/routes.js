@@ -81,9 +81,10 @@ import ItemList from "layouts/items/list";
 import LoadManage from "layouts/load";
 import SellersManage from "layouts/sellers/manage";
 import UsersManage from "layouts/users";
+import authController from "./controllers/auth";
 
-const auth = localStorage.getItem("auth");
-const userName = JSON.parse(auth).user.name;
+const auth = authController.getAuth();
+const userName = auth.user.name;
 const routes = [
   {
     type: "collapse",
