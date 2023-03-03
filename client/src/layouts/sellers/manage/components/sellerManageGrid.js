@@ -2,9 +2,13 @@ import * as React from 'react';
 import FullEditDataGrid from "../../../../components/FullEditDataGrid";
 import { useEffect, useState } from "react";
 import sellerController from "../../../../controllers/seller";
+import moment from "moment";
 
 export default function SellerManageGrid() {
-    const [rows, setRows] = useState([]);
+    const [rows, setRawRows] = useState([]);
+    const setRows = (rows)=> {
+        return setRawRows([...rows.map((r, i)=>({...r, no: i + 1}))]);
+    };
     useEffect(() => {
         sellerController.getAll().then((res)=>{
             setRows(res.data);
@@ -15,6 +19,8 @@ export default function SellerManageGrid() {
         sellerController.saveRow(updatedRow).then((res)=>{
             const dbRow = res.data;
             setRows(rows.map(r => (r.id === updatedRow.id ? {...dbRow}: r)));
+        }).catch((err)=>{
+            setRows(rows);
         });
     };
 
@@ -22,7 +28,15 @@ export default function SellerManageGrid() {
         sellerController.deleteRow(id).then((res)=>{
             const dbRow = res.data;
             setRows(rows.filter(r=> r.id !== dbRow.id));
+        }).catch((err)=>{
+            setRows(rows);
         });
+    };
+
+    const createRowData = (rows) => {
+        const newId = Math.max(...rows.map((r)=>(r.id ? r.id : 0) * 1)) + 1;
+        const newNo = Math.max(...rows.map((r)=>((r.no ? r.no : 0) * 1))) + 1;
+        return {id: newId, no: newNo}
     };
 
     return (
@@ -31,6 +45,7 @@ export default function SellerManageGrid() {
             rows={rows}
             onSaveRow={onSaveRow}
             onDeleteRow={onDeleteRow}
+            createRowData={createRowData}
         />
     );
 }
@@ -41,7 +56,7 @@ const columns = [
     { field: 'login', headerName: 'Login', width: 100 , headerAlign:'center', type:'text',  align:"center", editable: true},
     { field: 'title', headerName: 'Title', width: 150 , headerAlign:'center', type: 'text',  align:"center", editable: true},
     { field: 'desc', headerName: 'Description', width: 250,  headerAlign:'center', type: 'text', editable: true},
-    { field: 'dateCreated', headerName: 'DateCreated', width:150,  headerAlign:'center', type:'date', editable: false, align: "center"},
+    { field: 'dateCreated', headerName: 'DateCreated', width:150,  headerAlign:'center', type:'date', editable: false, align: "center", renderCell: ({value})=>(moment(value).format('MM/DD/yyyy'))},
 ];
 
 

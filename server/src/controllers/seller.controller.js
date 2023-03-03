@@ -12,6 +12,7 @@ const search = (query, req, res) => {
 
 //patch
 const saveOne = (body, req, res) => {
+    delete body["no"];
     sellerModel.inputRow(body, (qb, err, seller)=>{
         qb.release();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
