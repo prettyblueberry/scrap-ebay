@@ -36,93 +36,20 @@ import VerticalBarChart from "../../../examples/Charts/BarCharts/VerticalBarChar
 import verticalBarChartData from "../../pages/charts/data/verticalBarChartData";
 
 import SellerDataGridDays from "layouts/sellers/analytics/components/VerticalBarChart/sellerDataGridDays";
+import {useEffect, useState} from "react";
 
-const rows = [
-  {
-    id: 1,
-    login: 'as_bb',
-    seller: '123',
-    description: 'World',
-    soldLast30: 213,
-    soldLast1: 123,
-    soldLast7: 123,
-    dataSaved: '3/11/2022'
-  },
-  {
-    id: 2,
-    login: 'as_xx',
-    seller: '263',
-    description: 'World',
-    soldLast30: 213,
-    soldLast1: 123,
-    soldLast7: 123,
-    dataSaved: '3/11/2022'
-  },
-  {
-    id: 3,
-    login: 'as_er',
-    seller: '25',
-    description: 'World',
-    soldLast30: 213,
-    soldLast1: 123,
-    soldLast7: 123,
-    dataSaved: '3/11/2022'
-  },
-  {
-    id: 4,
-    login: 'as_wr',
-    seller: '345',
-    description: 'World',
-    soldLast30: 213,
-    soldLast7: 123,
-    soldLast1: 123,
-    dataSaved: '3/11/2022'
-  },
-  {
-    id: 5,
-    login: 'as_wr',
-    seller: '345',
-    description: 'World',
-    soldLast30: 213,
-    soldLast7: 123,
-    soldLast1: 123,
-    dataSaved: '3/11/2022'
-  },
-  {
-    id: 6,
-    login: 'as_wr',
-    seller: '345',
-    description: 'World',
-    soldLast30: 213,
-    soldLast7: 123,
-    soldLast1: 123,
-    dataSaved: '3/11/2022'
-  },
-  {
-    id: 7,
-    login: 'as_wr',
-    seller: '345',
-    description: 'World',
-    soldLast30: 2312,
-    soldLast7: 234,
-    soldLast1: 123,
-    dataSaved: '3/11/2022'
-  },
-  {
-    id: 8,
-    login: 'as_wr',
-    seller: '345',
-    description: 'World',
-    soldLast30: "213",
-    soldLast7: 123,
-    soldLast1: 123,
-    dataSaved: '3/11/2022'
-  },
-];
+import sellerController from "../../../controllers/seller";
 
 function SellerList() {
+  const [rows, setRows] = useState([]);
+  const [filteredRows, setFilteredRows] = useState([]);
 
-  const [filteredRows, setFilteredRows] = React.useState(() => rows);
+  useEffect(()=>{
+    sellerController.getAnalytics().then((res)=>{
+      setRows(res.data);
+      setFilteredRows(res.data);
+    });
+  }, []);
 
   return (
     <DashboardLayout>

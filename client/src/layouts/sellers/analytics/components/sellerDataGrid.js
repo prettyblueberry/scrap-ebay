@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { DataGrid, GridToolbar  } from '@mui/x-data-grid';
 import LinearProgress from '@mui/material/LinearProgress';
+import {useEffect} from "react";
 
 const columns = [
     { field: 'id', headerName: 'Id', width: 50 , hide: true, align:"center"},
     { field: 'login', headerName: 'Login', width: 80 , headerAlign:'center',  align:"center"},
-    { field: 'seller', headerName: 'Name', width: 100 , headerAlign:'center',  align:"center"},
-    { field: 'description', headerName: 'Desc', width: 80 , headerAlign:'center'},
+    { field: 'title', headerName: 'Title', width: 100 , headerAlign:'center',  align:"center"},
+    { field: 'desc', headerName: 'Description', width: 80 , headerAlign:'center'},
     { field: 'soldLast1', headerName: 'SoldIn1D', width: 100, align:"right", headerAlign:'center', type:"number"},
     { field: 'soldLast7', headerName: 'SoldIn7D', width: 100, align:"right", headerAlign:'center', type: "number"},
     { field: 'soldLast30', headerName: 'SoldIn30D', width: 100, align:"right", headerAlign:'center', type:"number" },
@@ -14,8 +15,11 @@ const columns = [
 
 function SellerDataGrid({ rows, setFilteredRows}) {
     const [pageSize, setPageSize] = React.useState(10);
-    const [selectionModel, setSelectionModel] = React.useState(() => rows.map((r)=>r.id));
+    const [selectionModel, setSelectionModel] = React.useState([]);
 
+    useEffect(()=>{
+        setSelectionModel(rows.map((r)=>r.id));
+    }, [rows]);
 
     return (
         <div style={{width: '100%'}}>

@@ -10,6 +10,18 @@ const search = (query, req, res) => {
     })
 }
 
+//analytics
+const analytics = (req, res) => {
+    sellerModel.getWhere({},(qb, err, sellers)=>{
+        qb.release();
+        if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
+        const analytics = sellers.map((s) => {
+            return {...s}
+        });
+        res.json(analytics);
+    })
+}
+
 //patch
 const saveOne = (body, req, res) => {
     delete body["no"];
@@ -32,5 +44,6 @@ const deleteOne = (id, req, res) => {
 export default {
     search,
     deleteOne,
-    saveOne
+    saveOne,
+    analytics
 }

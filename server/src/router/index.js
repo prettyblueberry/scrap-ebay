@@ -16,6 +16,7 @@ router.delete('/auth', (req, res)=>{
 });
 
 routeRestful('/seller', sellerController, router);
+router.get('/seller/analytics', sellerController.analytics);
 
 routeRestful('/load', loadController, router);
 router.post('/load/all', (req, res)=>{
