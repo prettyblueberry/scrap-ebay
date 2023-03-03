@@ -1,5 +1,5 @@
 import * as React from 'react';
-import FullEditDataGrid from "../../../components/DeleteOnlyDataGrid";
+import DeleteOnlyDataGrid from "../../../components/DeleteOnlyDataGrid";
 import { useEffect, useState } from "react";
 import loadController from "../../../controllers/load";
 import moment from "moment";
@@ -33,7 +33,7 @@ export default function LoadDataGrid({setFilteredRows}) {
     };
 
     return (
-        <FullEditDataGrid
+        <DeleteOnlyDataGrid
             columns={columns}
             rows={rows}
             onDeleteRow={onDeleteRow}
