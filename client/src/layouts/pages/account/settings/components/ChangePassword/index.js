@@ -22,7 +22,8 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import MDInput from "components/MDInput";
-
+import {useState} from "react";
+import userController from "../../../../../../controllers/user";
 function ChangePassword() {
   const passwordRequirements = [
     "One special characters",
@@ -42,6 +43,15 @@ function ChangePassword() {
       </MDBox>
     );
   });
+  const [currentPwd, setCurrentPwd] = useState("");
+  const [newPwd, setNewPwd] = useState("");
+  const [confirmPwd, setConfirmPwd] = useState("");
+
+  const handleUpdatePassword = () => {
+    if(newPwd !== confirmPwd) alert("Password confirm error!");
+    userController.updatePassword(currentPwd, newPwd);
+  }
+
 
   return (
     <Card id="change-password">
@@ -55,6 +65,10 @@ function ChangePassword() {
               fullWidth
               label="Current Password"
               inputProps={{ type: "password", autoComplete: "" }}
+              value={currentPwd}
+              onChange={(evt)=>{
+                setCurrentPwd(evt.target.value)
+              }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -62,6 +76,10 @@ function ChangePassword() {
               fullWidth
               label="New Password"
               inputProps={{ type: "password", autoComplete: "" }}
+              value={newPwd}
+              onChange={(evt)=>{
+                setNewPwd(evt.target.value)
+              }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -69,6 +87,10 @@ function ChangePassword() {
               fullWidth
               label="Confirm New Password"
               inputProps={{ type: "password", autoComplete: "" }}
+              value={confirmPwd}
+              onChange={(evt)=>{
+                setConfirmPwd(evt.target.value)
+              }}
             />
           </Grid>
         </Grid>
@@ -85,7 +107,7 @@ function ChangePassword() {
             {renderPasswordRequirements}
           </MDBox>
           <MDBox ml="auto">
-            <MDButton variant="gradient" color="dark" size="small">
+            <MDButton variant="gradient" color="dark" size="small" onClick={handleUpdatePassword}>
               update password
             </MDButton>
           </MDBox>

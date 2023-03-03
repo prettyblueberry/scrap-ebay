@@ -20,9 +20,6 @@ import PropTypes from "prop-types";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
-import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 
 // Material Dashboard 2 PRO React components
 import MDBox from "components/MDBox";
@@ -66,16 +63,6 @@ function BaseLayout({ stickyNavbar, children }) {
       <DashboardNavbar absolute={!stickyNavbar} isMini />
       <MDBox mt={stickyNavbar ? 3 : 10}>
         <Grid container>
-          <Grid item xs={12} sm={8} lg={4}>
-            <AppBar position="static">
-              <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
-                <Tab label="Messages" />
-                <Tab label="Social" />
-                <Tab label="Notifications" />
-                <Tab label="Backup" />
-              </Tabs>
-            </AppBar>
-          </Grid>
         </Grid>
         {children}
       </MDBox>

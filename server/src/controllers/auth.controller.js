@@ -6,20 +6,37 @@ const verify = (email, reqPwd, dbPwd) =>{
 }
 
 const signIn = ({email, pwd}, req, res) => {
-        userModel.findByEmail(email, (user)=>{
-            if(!user) {
-                res.status(HS.UNAUTHORIZED).json({reason: "email"});
-                return;
-            }
-            const v = verify(email, pwd, user.pwd)
-            if(v) {
-                res.status(HS.OK).json({ auth_token: "12312123" });
-            }
-            else {
-                res.status(HS.UNAUTHORIZED).json({ reason: "pwd" });
-            }
-        })
-    };
+    verifyUser({ email }, pwd, ({status, data})=>{
+        if(status === HS.OK) {
+            return res.json({auth_token: "123123", user: data})
+        }
+        res.status(status).json(data);
+    });
+};
+
+const verifyUser = (where, pwd, callback) => {
+    userModel.find(where, (user)=>{
+        if(!user) {
+            return callback({
+                status: HS.UNAUTHORIZED,
+                data: { reason: "email" }
+            })
+        }
+        const v = verify(where, pwd, user.pwd)
+        if(v) {
+            return callback({
+                status: HS.OK,
+                data: user
+            });
+        }
+        else {
+            return callback({
+                status: HS.UNAUTHORIZED,
+                data: { reason: "pwd" }
+            });
+        }
+    })
+};
 
 const signOut = (req, res) => {
 
@@ -28,5 +45,6 @@ const signOut = (req, res) => {
 
 export default {
     signIn,
-    signOut
+    signOut,
+    verifyUser
 }

@@ -7,7 +7,7 @@ const signIn = ( email, pwd ) => {
         pwd
     }).then((res)=>{
         console.log("set localStorage auth_token", res.data.auth_token)
-        localStorage.setItem('auth_token', res.data.auth_token);
+        localStorage.setItem("auth", JSON.stringify(res.data));
         return res;
     });
 }

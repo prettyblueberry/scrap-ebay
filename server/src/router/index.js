@@ -4,6 +4,7 @@ import sellerController from "../controllers/seller.controller.js";
 import loadController from "../controllers/load.controller.js";
 import itemController from "../controllers/item.controller.js";
 import scheduleController from "../controllers/schedule.controller.js";
+import userController from "../controllers/user.controller.js";
 import HS from "http-status-codes";
 
 const router = Router();
@@ -29,5 +30,11 @@ routeRestful('/item', itemController, router);
 router.get('/item/latest', itemController.latest);
 
 routeRestful('/schedule', scheduleController, router);
+
+routeRestful('/user', userController, router);
+router.patch('/user/:id/pwd', (req, res)=>{
+    userController.updatePassword(req.params.id, req.body, req, res);
+});
+
 
 export default router;

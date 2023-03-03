@@ -90,12 +90,12 @@ const routes = [
     key: "brooklyn-alice",
     icon: <MDAvatar src={profilePicture} alt="Brooklyn Alice" size="sm" />,
     collapse: [
-      {
-        name: "My Profile",
-        key: "my-profile",
-        route: "/pages/profile/profile-overview",
-        component: <ProfileOverview />,
-      },
+      // {
+      //   name: "My Profile",
+      //   key: "my-profile",
+      //   route: "/pages/profile/profile-overview",
+      //   component: <ProfileOverview />,
+      // },
       {
         name: "Settings",
         key: "profile-settings",
