@@ -31,7 +31,7 @@ const loadAllSellers = (callback) => {
                 }
                 if(pendingCount === 0){
                     console.log(`scraping-finish-all: items of ${sellers.length} sellers with ${pendingCount} errors`);
-                    callback();
+                    if(callback) callback();
                 }
             });
         });

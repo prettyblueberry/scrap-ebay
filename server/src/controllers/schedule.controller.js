@@ -1,35 +1,52 @@
 import HS from "http-status-codes";
 import scheduleModel from "../models/schedule.model.js";
+import schedule from "node-schedule";
+import loadController from "./load.controller.js";
+
+let scheduleJob = null;
+const setScheduleJob = () => {
+    if(scheduleJob) scheduleJob.cancel();
+    scheduleModel.getWhere({}, (qb, err, times)=>{
+        qb.release();
+        if(times.length > 0 ){
+            const time = times[0].time;
+            const h = time.substring(11,13);
+            const m = time.substring(14, 16);
+            const s = time.substring(17, 19);
+            scheduleJob = schedule.scheduleJob(`${s} ${m} ${h} * * *`, function(){
+                console.log("schedule job start:" , `${h}:${m}:${s}`)
+                loadController.loadAllSellers(()=>{
+                    console.log("schedule job finish")
+                });
+            });
+            console.log("schedule job has been created:" , `${h}:${m}:${s}`)
+        }
+    })
+};
 
 //get
 const search = (query, req, res) => {
-    scheduleModel.getWhere(query, (qb, err, sellers)=>{
+    scheduleModel.getWhere(query, (qb, err, times)=>{
         qb.release();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
-        res.json(sellers);
+        res.json(times);
     })
 }
 
 //patch
 const saveOne = (body, req, res) => {
-    scheduleModel.inputRow({id: 1, time: body.time.replace("T", " ")}, (qb, err, seller)=>{
+    scheduleModel.inputRow({id: 1, time: body.time.replace("T", " ")}, (qb, err, time)=>{
         qb.release();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
-        res.json(seller);
+        setScheduleJob();
+        res.json(time);
     })
 }
 
-//delete
-const deleteOne = (id, req, res) => {
-    scheduleModel.deleteRow(id,(qb, err, oldSeller)=>{
-        qb.release();
-        if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
-        res.json(oldSeller);
-    });
-}
+
 
 export default {
     search,
-    deleteOne,
-    saveOne
+    saveOne,
+    setScheduleJob
 }
