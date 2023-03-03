@@ -82,6 +82,7 @@ import LoadManage from "layouts/load";
 import SellersManage from "layouts/sellers/manage";
 import UsersManage from "layouts/users";
 import authController from "./controllers/auth";
+import SignOut from "./layouts/authentication/sign-out";
 
 const auth = authController.getAuth();
 const userName = auth.user.name;
@@ -107,8 +108,8 @@ const routes = [
       {
         name: "Logout",
         key: "logout",
-        route: "/authentication/sign-in/basic",
-        component: <SignInBasic />,
+        route: "/authentication/sign-out",
+        component: <SignOut />,
       },
     ],
   },

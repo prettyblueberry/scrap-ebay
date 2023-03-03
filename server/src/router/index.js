@@ -6,6 +6,7 @@ import itemController from "../controllers/item.controller.js";
 import scheduleController from "../controllers/schedule.controller.js";
 import userController from "../controllers/user.controller.js";
 import HS from "http-status-codes";
+import {authMiddleware} from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
@@ -15,6 +16,9 @@ router.post('/auth', (req, res)=>{
 router.delete('/auth', (req, res)=>{
     return authController.signOut(req, res);
 });
+
+
+router.use(authMiddleware);
 
 routeRestful('/seller', sellerController, router);
 router.get('/seller/analytics', sellerController.analytics);

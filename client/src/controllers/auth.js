@@ -25,7 +25,7 @@ const signIn = ( email, pwd ) => {
 
 const getAuth = () => {
     const auth = localStorage.getItem("auth");
-    if(!auth) return {login: false, user:{}, tokenHeaderKey: null, token: null};
+    if(auth === null || auth === "" || auth === "null") return {login: false, user:{name: ""}, tokenHeaderKey: null, token: null};
     return JSON.parse(auth);
 }
 
@@ -36,9 +36,9 @@ const signOut = () => {
         return config;
     });
 
-    localStorage.setItem("auth", null);
-
-    return axios.delete('/auth')
+    localStorage.setItem("auth", "");
+    return;
+    // return axios.delete('/auth')
 }
 
 const setHeader = () => {

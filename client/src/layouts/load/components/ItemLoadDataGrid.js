@@ -16,7 +16,6 @@ export default function ItemLoadDataGrid({ loads }){
     useEffect(()=>{
         if(rows.length > 0){
             const filtered = rows.filter(r => loads.map(lo=>lo.id).includes(r.loadId));
-            console.log("filtered", filtered);
             setFilteredRows(filtered);
         }
     }, [loads])

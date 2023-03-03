@@ -44,7 +44,7 @@ const verifyUser = (where, pwd, callback) => {
 
 
 const signOut = (req, res) => {
-
+    res.sendStatus(HS.OK);
 }
 
 
