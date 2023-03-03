@@ -31,8 +31,26 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
+import {useState} from "react";
+import userController from "../../../../controllers/user";
+import { useNavigate } from "react-router-dom";
+
 
 function Cover() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const navigate = useNavigate();
+  const redirect = "/authentication/sign-in/basic";
+
+  const handleSubmit = () => {
+    if(pwd !== confirm) alert("Password confirm error!");
+    userController.saveRow({name, email, pwd, isNew: true}).then(()=>{
+      return navigate(redirect);
+    });
+  }
+
   return (
     <CoverLayout image={bgImage}>
       <Card>
@@ -48,7 +66,7 @@ function Cover() {
           textAlign="center"
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Join us today
+            Register
           </MDTypography>
           <MDTypography display="block" variant="button" color="white" my={1}>
             Enter your email and password to register
@@ -57,38 +75,20 @@ function Cover() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="text" label="Name" variant="standard" fullWidth />
+              <MDInput type="text" label="Name" variant="standard" fullWidth value={name} onChange={(event)=> setName(event.target.value) }/>
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" variant="standard" fullWidth />
+              <MDInput type="email" label="Email" variant="standard" fullWidth value={email} onChange={(event)=> setEmail(event.target.value) }/>
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" variant="standard" fullWidth />
+              <MDInput type="password" label="Password" variant="standard" fullWidth value={pwd} onChange={(event)=> setPwd(event.target.value) }/>
             </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Checkbox />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;I agree the&nbsp;
-              </MDTypography>
-              <MDTypography
-                component="a"
-                href="#"
-                variant="button"
-                fontWeight="bold"
-                color="info"
-                textGradient
-              >
-                Terms and Conditions
-              </MDTypography>
+            <MDBox mb={2}>
+              <MDInput type="password" label="Confirm" variant="standard" fullWidth value={confirm} onChange={(event)=> setConfirm(event.target.value) }/>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
-                sign in
+              <MDButton variant="gradient" color="info" fullWidth onClick={handleSubmit}>
+                sign up
               </MDButton>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
@@ -96,7 +96,7 @@ function Cover() {
                 Already have an account?{" "}
                 <MDTypography
                   component={Link}
-                  to="/authentication/sign-in/cover"
+                  to={redirect}
                   variant="button"
                   color="info"
                   fontWeight="medium"
