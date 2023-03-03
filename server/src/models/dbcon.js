@@ -8,8 +8,10 @@ const settings = {
 };
 const pool = new QueryBuilder(settings, 'mysql', 'pool');
 
-const getQBuilder = () => {
+const getQBuilder = (qb) => {
     return new Promise((resolve) => {
+        if(qb) return resolve(qb);
+
         pool.get_connection(qb => {
             resolve(qb)
         })
