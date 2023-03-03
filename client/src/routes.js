@@ -82,13 +82,14 @@ import LoadManage from "layouts/load";
 import SellersManage from "layouts/sellers/manage";
 import UsersManage from "layouts/users";
 
-
+const auth = localStorage.getItem("auth");
+const userName = JSON.parse(auth).user.name;
 const routes = [
   {
     type: "collapse",
-    name: "Brooklyn Alice",
+    name: userName,
     key: "brooklyn-alice",
-    icon: <MDAvatar src={profilePicture} alt="Brooklyn Alice" size="sm" />,
+    icon: <MDAvatar alt={userName} size="sm" />,
     collapse: [
       // {
       //   name: "My Profile",
