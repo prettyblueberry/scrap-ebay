@@ -23,19 +23,25 @@ export default function ScheduleTimePicker() {
 
     return (
         <>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <TimePicker
-                    label="Basic example"
-                    value={value}
-                    onChange={(newValue) => {
-                        setValue(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                />
-            </LocalizationProvider>
-            <MDButton variant="gradient" color="info" ml={2} onClick={save}>
-                Save
-            </MDButton>
+            <MDBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={0}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <TimePicker
+                        label="Time to load data"
+                        value={value}
+                        onChange={(newValue) => {
+                            setValue(newValue);
+                        }}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
+                </LocalizationProvider>
+                <MDBox display="flex">
+                    <MDBox>
+                        <MDButton variant="gradient" color="info" ml={2} onClick={save}>
+                            Save
+                        </MDButton>
+                    </MDBox>
+                </MDBox>
+            </MDBox>
         </>
     );
 }

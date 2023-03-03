@@ -32,7 +32,25 @@ function LoadManage() {
                             <MDBox p={3} lineHeight={1}>
                                 <MDBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={0}>
                                     <MDTypography variant="h5" fontWeight="medium">
-                                        Loading History
+                                        Schedule for Loading
+                                    </MDTypography>
+                                </MDBox>
+                                <MDTypography variant="button" color="text">
+                                    You can make schedule for loading.
+                                </MDTypography>
+                            </MDBox>
+
+                            <MDBox p={3} lineHeight={1}>
+                                <ScheduleTimePicker />
+                            </MDBox>
+                        </Card>
+                    </MDBox>
+                    <MDBox m={2}>
+                        <Card>
+                            <MDBox p={3} lineHeight={1}>
+                                <MDBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={0}>
+                                    <MDTypography variant="h5" fontWeight="medium">
+                                        Log of Loading
                                     </MDTypography>
                                     <MDBox display="flex">
                                         <MDBox>
@@ -54,32 +72,6 @@ function LoadManage() {
                                             <MDBox m={2}>
                                                 <LoadDataGrid setFilteredRows={setFilteredLoads}
                                                 />
-                                            </MDBox>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </MDBox>
-                        </Card>
-                    </MDBox>
-                    <MDBox m={2}>
-                        <Card>
-                            <MDBox p={3} lineHeight={1}>
-                                <MDBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={0}>
-                                    <MDTypography variant="h5" fontWeight="medium">
-                                        Loading Schedule
-                                    </MDTypography>
-                                </MDBox>
-                                <MDTypography variant="button" color="text">
-                                    You can check row to show items in detail.
-                                </MDTypography>
-                            </MDBox>
-
-                            <MDBox>
-                                <Grid container>
-                                    <Grid item md={12}>
-                                        <Grid item md={12}>
-                                            <MDBox m={2}>
-                                                <ScheduleTimePicker />
                                             </MDBox>
                                         </Grid>
                                     </Grid>

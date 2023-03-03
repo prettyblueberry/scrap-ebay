@@ -95,7 +95,7 @@ function ChangePassword() {
           </Grid>
         </Grid>
         <MDBox mt={6} mb={1}>
-          <MDTypography variant="h5">Password requirements</MDTypography>
+          <MDTypography variant="h5">Password Guide</MDTypography>
         </MDBox>
         <MDBox mb={1}>
           <MDTypography variant="body2" color="text">
