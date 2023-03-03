@@ -106,7 +106,7 @@ const ItemsModel = {
         this.findRowById(id, (qb, err, oldRow)=>{
             if(err) return callback(qb, err);
 
-            qb.delete(tblName, {id: id}, (err, res)=>{
+            qb.delete(tblName, {id: id}, (err)=>{
                 if (err) {
                     const lastQuery = qb.last_query();
                     console.error(err, lastQuery);
@@ -117,7 +117,16 @@ const ItemsModel = {
         });
     },
 
-    insertBatch: function(qb, rows, callback){
+    insertBatch: function(qb, rawRows, callback){
+        //undefined -> null
+        const rows = rawRows.map((r) => {
+            const keys = Object.keys(r);
+            keys.forEach((k)=>{
+                if(r[k] === undefined) r[k] = null;
+            })
+            return r;
+        });
+
         dbCon(qb).then((qb)=>{
             qb.insert_batch(tblName, rows, function(err, res) {
                 if(err) {

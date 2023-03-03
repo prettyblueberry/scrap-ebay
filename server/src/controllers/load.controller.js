@@ -12,19 +12,33 @@ const search = (query, req, res) => {
         res.json(sellers);
     })
 }
-
-const loadAllSellers = () => {
+const maxItems = 5;
+let pendingCount = 0;
+let pendingError = 0;
+const loadAllSellers = (callback) => {
     sellerModel.getWhere({}, (qb, err, sellers)=>{
-        sellers.forEach((s, i)=>{
-            scrapHelper.scrapBySeller(s.login, 10, (items)=>{
-
-            })
+        console.log(`scraping-try-all: items of ${sellers.length} sellers`);
+        sellers.forEach((s)=>{
+            pendingCount ++;
+            loadOneSeller(s, maxItems, (qb, err)=>{
+                qb.release();
+                pendingCount --;
+                if(err) {
+                    pendingError ++;
+                    const lastQuery = qb.last_query();
+                    console.error(err, lastQuery);
+                }
+                if(pendingCount === 0){
+                    console.log(`scraping-finish-all: items of ${sellers.length} sellers with ${pendingCount} errors`);
+                    callback();
+                }
+            });
         });
     })
 }
 
-const loadOneSeller = (s, callback) => {
-    scrapHelper.scrapBySeller(s.login, 10, (rawItems, url)=>{
+const loadOneSeller = (s, maxItems, callback) => {
+    scrapHelper.scrapBySeller(s.login, maxItems, (rawItems, url)=>{
         loadModel.inputRow({sellerId: s.id, srcUrl: url, isNew: true}, (qb, err, dbLoad) => {
             const items = rawItems.map((item) => ({
                 loadId: dbLoad.id,
@@ -80,5 +94,6 @@ export default {
     search,
     deleteOne,
     saveOne,
-    loadOneSeller
+    loadOneSeller,
+    loadAllSellers
 }

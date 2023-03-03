@@ -32,7 +32,7 @@ const scrap =  (url, maxItems, callback) => {
 }
 
 const scrapBySeller = (sellerLogin, maxItems, callback) => {
-    const url = `${site}/sch/i.html?_fss=1&_saslop=1&_sasl=${sellerLogin}&LH_SpecificSeller=1`;
+    const url = `${site}/sch/i.html?_nkw=&_armrs=1&_ipg=&_from=&_ssn=${sellerLogin}&_sop=10&LH_Sold=1&LH_Complete=1`;
     console.log(`scraping-try: items of seller '${sellerLogin}' from url '${url}'`);
     scrap(url, maxItems, (items, url) => {
         console.log(`scraping-finish: ${items.length} items of seller '${sellerLogin}'`);
