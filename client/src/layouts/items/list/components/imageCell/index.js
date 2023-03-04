@@ -17,7 +17,7 @@ Coded by www.creative-tim.com
 function ImageCell({ image, name }) {
   return (
     // <MDBox m={3} mt={2} mb={2}>
-      <img src={image} alt={name}/>
+      <img src={image} alt={name}  style={{width:"100%", height: "auto"}}/>
     // </MDBox>
   );
 }

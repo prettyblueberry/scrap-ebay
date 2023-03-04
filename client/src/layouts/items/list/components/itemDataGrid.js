@@ -10,7 +10,7 @@ const columns = [
     { field: 'itemNumber', headerName: 'Number', width: 200 , headerAlign:'center',  align:"center", type: "string"},
     { field: 'image', headerName: 'Image', width: 150 , headerAlign:'center', align:"center",
         renderCell: ({ value, row }) => (
-            <MDBox m={3}><ImageCell image={value} name={row.title} /></MDBox>
+            <MDBox m={1}><ImageCell image={value} name={row.title}/></MDBox>
         ),
     },
     { field: 'title', headerName: 'Title', width: 150 , headerAlign:'center'},
@@ -66,6 +66,7 @@ function ItemDataGrid({ rows }) {
                   rowsPerPageOptions={[10, 25, 50, 100]}
                   pagination
                   autoHeight
+                  rowHeight={200}
                   // loading
             />
         </div>
