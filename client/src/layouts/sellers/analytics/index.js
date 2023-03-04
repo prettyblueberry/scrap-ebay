@@ -89,13 +89,13 @@ function SellerList() {
         </Grid>
         <Grid item md={6}>
           <MDBox md={12} m={2}>
-            <SellerDataGridDays title={"Sold in 1 day"} description={"adsasdf"} rows={filteredRows} dataKey={"soldLast1"} color={"dark"} icon={{color: "dark", component:"Day"}}/>
+            <SellerDataGridDays title={"Sold in 1 day"} description={""} rows={filteredRows} dataKey={"soldLast1"} color={"dark"} icon={{color: "dark", component:"Day"}}/>
           </MDBox>
           <MDBox md={12} m={2}>
-            <SellerDataGridDays title={"Sold in 7 day"} description={"adsasdf"} rows={filteredRows} dataKey={"soldLast7"} color={"primary"} icon={{color : "warning", component: "Week"}}/>
+            <SellerDataGridDays title={"Sold in 7 day"} description={""} rows={filteredRows} dataKey={"soldLast7"} color={"primary"} icon={{color : "warning", component: "Week"}}/>
           </MDBox>
           <MDBox md={12} m={2}>
-            <SellerDataGridDays title={"Sold in 30 day"} description={"adsasdf"} rows={filteredRows} dataKey={"soldLast30"} color={"warning"} icon={{color : "primary", component: "Month"}} />
+            <SellerDataGridDays title={"Sold in 30 day"} description={""} rows={filteredRows} dataKey={"soldLast30"} color={"warning"} icon={{color : "primary", component: "Month"}} />
           </MDBox>
         </Grid>
       </Grid>
