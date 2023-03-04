@@ -20,13 +20,15 @@ import Grid from "@mui/material/Grid";
 import MDBox from "components/MDBox";
 
 // Settings page components
-import BaseLayout from "layouts/pages/account/components/BaseLayout";
 import ChangePassword from "layouts/pages/account/settings/components/ChangePassword";
+import DashboardNavbar from "../../../../examples/Navbars/DashboardNavbar";
+import DashboardLayout from "../../../../examples/LayoutContainers/DashboardLayout";
 
 function Settings() {
 
   return (
-    <BaseLayout>
+    <DashboardLayout>
+      <DashboardNavbar />
       <MDBox mt={4}>
         <Grid container spacing={3}>
           <Grid item xs={12} lg={9}>
@@ -40,7 +42,7 @@ function Settings() {
           </Grid>
         </Grid>
       </MDBox>
-    </BaseLayout>
+    </DashboardLayout>
   );
 }
 
