@@ -50,7 +50,6 @@ import MDAvatar from "components/MDAvatar";
 import Icon from "@mui/material/Icon";
 
 // Images
-import profilePicture from "assets/images/team-3.jpg";
 
 //customized components
 import SellerList from "layouts/sellers/analytics";
@@ -60,15 +59,22 @@ import SellersManage from "layouts/sellers/manage";
 import UsersManage from "layouts/users";
 import authController from "./controllers/auth";
 import SignOut from "./layouts/authentication/sign-out";
+import {useEffect, useState} from "react";
 
-const auth = authController.getAuth();
-const userName = auth.user.name;
+const Username = ()=>{
+  const [name, setName] = useState("");
+  useEffect(()=>{
+    const auth = authController.getAuth();
+    setName(auth.user.name);
+  });
+  return name;
+}
 const routes = [
   {
     type: "collapse",
-    name: userName,
+    name: <Username />,
     key: "brooklyn-alice",
-    icon: <MDAvatar alt={userName} size="sm" />,
+    icon: <MDAvatar alt={""} size="sm" />,
     collapse: [
       // {
       //   name: "My Profile",
