@@ -146,6 +146,7 @@ const routes = [
     type: "collapse",
     name: "Authentication",
     key: "authentication",
+    hidden: true,
     icon: <Icon fontSize="medium">content_paste</Icon>,
     collapse: [
       {

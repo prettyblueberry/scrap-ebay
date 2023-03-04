@@ -161,83 +161,84 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
   const renderRoutes = routes.map(
-    ({ type, name, icon, title, collapse, noCollapse, key, href, route }) => {
+    ({ type, name, icon, title, collapse, noCollapse, key, href, route, hidden }) => {
       let returnValue;
-
-      if (type === "collapse") {
-        if (href) {
+      if(hidden === true) returnValue = "";
+      else {
+        if (type === "collapse") {
+          if (href) {
+            returnValue = (
+                <Link
+                    href={href}
+                    key={key}
+                    target="_blank"
+                    rel="noreferrer"
+                    sx={{ textDecoration: "none" }}
+                >
+                  <SidenavCollapse
+                      name={name}
+                      icon={icon}
+                      active={key === collapseName}
+                      noCollapse={noCollapse}
+                  />
+                </Link>
+            );
+          } else if (noCollapse && route) {
+              returnValue = (
+                  <NavLink to={route} key={key} hidden={hidden}>
+                    <SidenavCollapse
+                        name={name}
+                        icon={icon}
+                        noCollapse={noCollapse}
+                        active={key === collapseName}
+                    >
+                      {collapse ? renderCollapse(collapse) : null}
+                    </SidenavCollapse>
+                  </NavLink>
+              );
+          } else {
+            returnValue = (
+                <SidenavCollapse
+                    key={key}
+                    name={name}
+                    icon={icon}
+                    active={key === collapseName}
+                    open={openCollapse === key}
+                    onClick={() => (openCollapse === key ? setOpenCollapse(false) : setOpenCollapse(key))}
+                >
+                  {collapse ? renderCollapse(collapse) : null}
+                </SidenavCollapse>
+            );
+          }
+        } else if (type === "title") {
           returnValue = (
-            <Link
-              href={href}
-              key={key}
-              target="_blank"
-              rel="noreferrer"
-              sx={{ textDecoration: "none" }}
-            >
-              <SidenavCollapse
-                name={name}
-                icon={icon}
-                active={key === collapseName}
-                noCollapse={noCollapse}
-              />
-            </Link>
-          );
-        } else if (noCollapse && route) {
-          returnValue = (
-            <NavLink to={route} key={key}>
-              <SidenavCollapse
-                name={name}
-                icon={icon}
-                noCollapse={noCollapse}
-                active={key === collapseName}
+              <MDTypography
+                  key={key}
+                  color={textColor}
+                  display="block"
+                  variant="caption"
+                  fontWeight="bold"
+                  textTransform="uppercase"
+                  pl={3}
+                  mt={2}
+                  mb={1}
+                  ml={1}
               >
-                {collapse ? renderCollapse(collapse) : null}
-              </SidenavCollapse>
-            </NavLink>
+                {title}
+              </MDTypography>
           );
-        } else {
+        } else if (type === "divider") {
           returnValue = (
-            <SidenavCollapse
-              key={key}
-              name={name}
-              icon={icon}
-              active={key === collapseName}
-              open={openCollapse === key}
-              onClick={() => (openCollapse === key ? setOpenCollapse(false) : setOpenCollapse(key))}
-            >
-              {collapse ? renderCollapse(collapse) : null}
-            </SidenavCollapse>
+              <Divider
+                  key={key}
+                  light={
+                      (!darkMode && !whiteSidenav && !transparentSidenav) ||
+                      (darkMode && !transparentSidenav && whiteSidenav)
+                  }
+              />
           );
         }
-      } else if (type === "title") {
-        returnValue = (
-          <MDTypography
-            key={key}
-            color={textColor}
-            display="block"
-            variant="caption"
-            fontWeight="bold"
-            textTransform="uppercase"
-            pl={3}
-            mt={2}
-            mb={1}
-            ml={1}
-          >
-            {title}
-          </MDTypography>
-        );
-      } else if (type === "divider") {
-        returnValue = (
-          <Divider
-            key={key}
-            light={
-              (!darkMode && !whiteSidenav && !transparentSidenav) ||
-              (darkMode && !transparentSidenav && whiteSidenav)
-            }
-          />
-        );
       }
-
       return returnValue;
     }
   );
