@@ -13,7 +13,7 @@ const search = (query, req, res) => {
     })
 }
 
-const maxItems = 5;
+const maxItems = process.env.SCRAP_ITEM_LIMIT;
 let pendingCount = 0;
 let pendingError = 0;
 const loadAllSellers = (callback) => {

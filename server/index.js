@@ -10,7 +10,12 @@ import {jwtSession} from "./src/middlewares/auth.middleware.js";
 import scheduleController from "./src/controllers/schedule.controller.js";
 
 dotenv.config();
-const port = 3001;
+let port;
+
+if(process.env.NODE_ENV === "development"){
+   port = process.env.DEV_PORT;
+} else port = process.env.PORT;
+
 const app = express()
 
 app.use(morgan("dev"));

@@ -4,7 +4,7 @@ const site = "https://www.ebay.com";
 
 // Initialize the ApifyClient with API token
 const client = new ApifyClient({
-    token: 'apify_api_Z2y3N8mwFQnL0PaxmsAbkUSgFcY2i14xC0tK',
+    token: process.env.API_KEY,
 });
 
 const scrap =  (url, maxItems, callback) => {
