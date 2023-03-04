@@ -64,13 +64,7 @@ function SellerList() {
                 </MDTypography>
                 <MDBox display="flex">
                   <MDBox>
-                    <MDButton variant="outlined" color="dark">
-                      <Icon>description</Icon>
-                      &nbsp;export excel
-                    </MDButton>
-                    <MDButton variant="gradient" color="info" ml={2}>
-                      new seller
-                    </MDButton>
+                    {/*right buttons here*/}
                   </MDBox>
                 </MDBox>
               </MDBox>
