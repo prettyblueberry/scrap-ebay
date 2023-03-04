@@ -1,5 +1,4 @@
 import axios from "controllers/axios"
-import api from "controllers/axios";
 
 const signIn = ( email, pwd ) => {
     return axios.post('auth', {
@@ -37,7 +36,6 @@ const signOut = () => {
     });
 
     localStorage.setItem("auth", "");
-    return;
     // return axios.delete('/auth')
 }
 
@@ -49,8 +47,13 @@ const setHeader = () => {
     });
 }
 
+const isLogin = () => {
+    const auth = getAuth();
+    return auth.login;
+}
+
 setHeader();
 
 export default {
-    signIn, signOut, getAuth
+    signIn, signOut, getAuth, isLogin
 }

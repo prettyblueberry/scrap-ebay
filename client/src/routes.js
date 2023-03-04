@@ -85,7 +85,7 @@ const routes = [
       {
         name: "Logout",
         key: "logout",
-        route: "/authentication/sign-out",
+        route: "/sign-out",
         component: <SignOut />,
       },
     ],
@@ -140,8 +140,6 @@ const routes = [
     route: "/users/manage",
     component: <UsersManage />,
   },
-  { type: "divider", key: "divider-2" },
-  { type: "title", title: "Samples", key: "title-samples" },
   {
     type: "collapse",
     name: "Authentication",
@@ -153,6 +151,12 @@ const routes = [
         name: "Sign In",
         key: "sign-in",
         collapse: [
+          {
+            name: "Basic",
+            key: "basic",
+            route: "/sign-in",
+            component: <SignInBasic />,
+          },
           {
             name: "Basic",
             key: "basic",
