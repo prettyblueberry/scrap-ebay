@@ -83,13 +83,13 @@ const routes = [
       //   component: <ProfileOverview />,
       // },
       {
-        name: "settings",
+        name: "Change Password",
         key: "settings",
         route: "/pages/account/settings",
         component: <Settings />,
       },
       {
-        name: "logout",
+        name: "Sign Out",
         key: "logout",
         route: "/sign-out",
         component: <SignOut />,
