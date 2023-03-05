@@ -1,6 +1,8 @@
 import axios from "controllers/axios"
 
 const signIn = ( email, pwd ) => {
+    localStorage.setItem("auth", "");
+
     return axios.post('auth', {
         email,
         pwd
@@ -24,18 +26,14 @@ const signIn = ( email, pwd ) => {
 
 const getAuth = () => {
     const auth = localStorage.getItem("auth");
-    if(auth === null || auth === "" || auth === "null") return {login: false, user:{name: ""}, tokenHeaderKey: null, token: null};
+    if((!auth) || auth === "" || auth === "null" || auth === "NULL" || auth === "false")
+        return { login: false, user:{name: ""}, tokenHeaderKey: null, token: null };
     return JSON.parse(auth);
 }
 
 const signOut = () => {
-    axios.interceptors.request.use(function (config) {
-        const auth = getAuth();
-        delete config.headers[auth.tokenHeaderKey];
-        return config;
-    });
-
     localStorage.setItem("auth", "");
+    setHeader();
     // return axios.delete('/auth')
 }
 
