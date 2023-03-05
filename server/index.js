@@ -1,20 +1,17 @@
 import express from "express";
 import morgan from "morgan";
 import path from "path";
+import dotenv from 'dotenv';
+dotenv.config();
 import "./src/helpers/global.helper.js";
 import apiRouter from "./src/router/index.js";
 import cors from 'cors';
 import bodyParser from 'body-parser'
-import dotenv from 'dotenv';
+
 import {jwtSession} from "./src/middlewares/auth.middleware.js";
 import scheduleController from "./src/controllers/schedule.controller.js";
 
-dotenv.config();
-let port;
-
-if(process.env.NODE_ENV === "development"){
-   port = process.env.DEV_PORT;
-} else port = process.env.PORT;
+const port = process.env.SERVER_PORT;
 
 const app = express()
 
