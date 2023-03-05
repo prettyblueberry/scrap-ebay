@@ -42,5 +42,5 @@ export default function UserDataGrid() {
 const columns = [
     { field: 'id', headerName: 'Id', width: 50 , hide: true, align:"center", type:'number', editable: false},
     { field: 'name', headerName: 'Name', width:150,  headerAlign:'center', type:'date', editable: false, align: "center"},
-    { field: 'email', headerName: 'Email', width: 300 , headerAlign:'center', type:'text',  align:"center", editable: false},
+    { field: 'email', headerName: 'Email', width: 300 , headerAlign:'center', type:'string',  align:"center", editable: false},
 ];

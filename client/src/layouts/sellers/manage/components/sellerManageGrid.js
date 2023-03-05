@@ -53,9 +53,9 @@ export default function SellerManageGrid() {
 const columns = [
     { field: 'no', headerName: 'No', width: 50 , align:"center", type:'number', editable: false},
     { field: 'id', headerName: 'Id', width: 50 , hide: true, align:"center", type:'number', editable: true},
-    { field: 'login', headerName: 'Login', width: 100 , headerAlign:'center', type:'text',  align:"center", editable: true},
-    { field: 'title', headerName: 'Title', width: 150 , headerAlign:'center', type: 'text',  align:"center", editable: true},
-    { field: 'desc', headerName: 'Description', width: 250,  headerAlign:'center', type: 'text', editable: true},
+    { field: 'login', headerName: 'Login', width: 100 , headerAlign:'center', type:'string',  align:"center", editable: true},
+    { field: 'title', headerName: 'Title', width: 150 , headerAlign:'center', type: 'string',  align:"center", editable: true},
+    { field: 'desc', headerName: 'Description', width: 250,  headerAlign:'center', type: 'string', editable: true},
     { field: 'dateCreated', headerName: 'DateCreated', width:150,  headerAlign:'center', type:'date', editable: false, align: "center", renderCell: ({value})=>(moment(value).format('MM/DD/yyyy'))},
 ];
 

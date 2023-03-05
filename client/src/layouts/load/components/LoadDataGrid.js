@@ -50,9 +50,9 @@ export default function LoadDataGrid({setFilteredRows}) {
 const columns = [
     { field: 'id', headerName: 'Id', width: 50 , hide: true, align:"center", type:'number', editable: false},
     { field: 'datetimeCreated', headerName: 'DateCreated', width:150,  headerAlign:'center', type:'date', editable: false, align: "center", renderCell: ({value})=>(moment(value).format('MM/DD/yyyy hh:mm:ss'))},
-    { field: 'sellerLogin', headerName: 'SellerLogin', width: 300 , headerAlign:'center', type:'text',  align:"center", editable: false},
-    { field: 'sellerTitle', headerName: 'SellerTitle', width: 150 , headerAlign:'center', type: 'text',  align:"center", editable: false},
-    { field: 'srcUrl', headerName: 'SourceURL', width: 100,  headerAlign:'center', type: 'text', editable: false, cellClassName: "actions", align: "center",
+    { field: 'sellerLogin', headerName: 'SellerLogin', width: 300 , headerAlign:'center', type:'string',  align:"center", editable: false},
+    { field: 'sellerTitle', headerName: 'SellerTitle', width: 150 , headerAlign:'center', type: 'string',  align:"center", editable: false},
+    { field: 'srcUrl', headerName: 'SourceURL', width: 100,  headerAlign:'center', type: 'string', editable: false, cellClassName: "actions", align: "center",
         renderCell: ({ value }) => {
             return (
                 <a href={value} target={"_blank"}>
