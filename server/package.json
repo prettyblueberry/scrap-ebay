@@ -20,7 +20,8 @@
     "nodemon": "^2.0.20"
   },
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "serve": "node index.js"
   },
   "nodemonConfig": {
     "ignore": [
