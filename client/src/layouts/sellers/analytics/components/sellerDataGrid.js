@@ -14,7 +14,7 @@ const columns = [
 ];
 
 function SellerDataGrid({ rows, setFilteredRows}) {
-    const [pageSize, setPageSize] = React.useState(10);
+    const [pageSize, setPageSize] = React.useState(25);
     const [selectionModel, setSelectionModel] = React.useState([]);
 
     useEffect(()=>{
@@ -46,7 +46,7 @@ function SellerDataGrid({ rows, setFilteredRows}) {
 
               pageSize={pageSize}
               onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-              rowsPerPageOptions={[25, 50, 100]}
+              rowsPerPageOptions={[10, 25, 50, 100]}
               pagination
               autoHeight
               checkboxSelection

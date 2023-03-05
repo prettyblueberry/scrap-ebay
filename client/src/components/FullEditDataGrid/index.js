@@ -169,7 +169,7 @@ FullFeaturedCrudGrid.defaultProps = {
     //pagination
     pagination: true,
     defaultPageSize: 25,
-    rowsPerPageOptions: [25, 50, 100],
+    rowsPerPageOptions: [5, 10, 25, 50, 100],
 }
 
 export default FullFeaturedCrudGrid;
