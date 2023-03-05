@@ -83,13 +83,13 @@ const routes = [
       //   component: <ProfileOverview />,
       // },
       {
-        name: "Settings",
-        key: "profile-settings",
+        name: "settings",
+        key: "settings",
         route: "/pages/account/settings",
         component: <Settings />,
       },
       {
-        name: "Logout",
+        name: "logout",
         key: "logout",
         route: "/sign-out",
         component: <SignOut />,
@@ -131,7 +131,7 @@ const routes = [
   {
     type: "collapse",
     name: "Sellers",
-    key: "sellersManage",
+    key: "sellers",
     icon: <Icon fontSize="medium">sellers</Icon>,
     noCollapse: true,
     route: "/sellers/manage",
@@ -140,7 +140,7 @@ const routes = [
   {
     type: "collapse",
     name: "Users",
-    key: "usersManage",
+    key: "users",
     icon: <Icon fontSize="medium">manage</Icon>,
     noCollapse: true,
     route: "/users/manage",
