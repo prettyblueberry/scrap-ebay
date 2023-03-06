@@ -73,6 +73,7 @@ function Basic() {
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
             Sign in
           </MDTypography>
+          aaa@gmail.com, aaa
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
           {
