@@ -34,6 +34,7 @@ import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 import {useState} from "react";
 import userController from "../../../../controllers/user";
 import { useNavigate } from "react-router-dom";
+import MDAlert from "../../../../components/MDAlert";
 
 
 function Cover() {
@@ -43,11 +44,15 @@ function Cover() {
   const [confirm, setConfirm] = useState("");
   const navigate = useNavigate();
   const redirect = "/";
+  const [success, setSuccess] = useState({status: false, reason: ""});
 
   const handleSubmit = () => {
     if(pwd !== confirm) alert("Password confirm error!");
     userController.signUp({name, email, pwd}).then((res)=>{
-      return navigate(redirect);
+      setSuccess(true)
+      setTimeout(()=>{
+        return navigate(redirect);
+      }, 1000);
     });
   }
 
@@ -73,6 +78,13 @@ function Cover() {
           </MDTypography>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
+          { success === true ?
+                <MDAlert color="success" dismissible>
+                  <MDTypography variant="body2" color="white">
+                  Success!
+                  </MDTypography>
+                </MDAlert>: "" }
+
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <MDInput type="text" label="Name" variant="standard" fullWidth value={name} onChange={(event)=> setName(event.target.value) }/>
