@@ -18,8 +18,8 @@ router.delete('/auth', (req, res)=>{
 });
 
 //save, sign up
-router.patch('/user', function(req, res){
-    return userController.saveOne(req.body, req, res);
+router.post('/user', function(req, res){
+    return userController.signUp(req.body, req, res);
 });
 
 router.use(authMiddleware);
@@ -43,6 +43,9 @@ routeRestful('/schedule', scheduleController, router);
 //search
 router.get('/user', function(req, res){
     return userController.search(req.query, req, res);
+});
+router.patch('/user', function(req, res){
+    return userController.saveOne(req.body, req, res);
 });
 router.delete("/user/:id", function(req, res){
     return userController.deleteOne(req.params.id, req, res);

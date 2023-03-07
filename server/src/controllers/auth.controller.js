@@ -8,11 +8,8 @@ const verify = (email, reqPwd, dbPwd) =>{
 
 const signIn = ({email, pwd}, req, res) => {
     verifyUser({ email }, pwd, ({status, data}) => {
-        if(status === HS.OK) {
-            const token = jwtHelper.generateToken(JSON.stringify(data));
-            const tokenHeaderKey = process.env.TOKEN_HEADER_KEY;
-            return res.json({ token: token, user: data, tokenHeaderKey})
-        }
+        if(status === HS.OK)
+            return makeAuthResponse(data);
         res.status(status).json(data);
     });
 };
@@ -41,6 +38,12 @@ const verifyUser = (where, pwd, callback) => {
     })
 };
 
+const makeAuthResponse = (userdata)=>{
+    const token = jwtHelper.generateToken(JSON.stringify(userdata));
+    const tokenHeaderKey = process.env.TOKEN_HEADER_KEY;
+    return { token: token, user: userdata, tokenHeaderKey};
+}
+
 
 
 const signOut = (req, res) => {
@@ -51,5 +54,6 @@ const signOut = (req, res) => {
 export default {
     signIn,
     signOut,
-    verifyUser
+    verifyUser,
+    makeAuthResponse
 }

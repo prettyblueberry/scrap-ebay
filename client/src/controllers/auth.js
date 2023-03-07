@@ -7,19 +7,8 @@ const signIn = ( email, pwd ) => {
         email,
         pwd
     }).then((res)=>{
-        const user = res.data.user;
-        const tokenHeaderKey = res.data.tokenHeaderKey;
-        const token = res.data.token;
-
-        localStorage.setItem("auth", JSON.stringify({
-            login: true,
-            user,
-            tokenHeaderKey,
-            token
-        }));
-
+        saveAuthToLocalStorage(res.data);
         setHeader();
-
         return res;
     });
 }
@@ -37,6 +26,19 @@ const signOut = () => {
     // return axios.delete('/auth')
 }
 
+const saveAuthToLocalStorage = (auth) => {
+    const user = auth.user;
+    const tokenHeaderKey = auth.tokenHeaderKey;
+    const token = auth.token;
+
+    localStorage.setItem("auth", JSON.stringify({
+        login: true,
+        user,
+        tokenHeaderKey,
+        token
+    }));
+};
+
 const setHeader = () => {
     const auth = getAuth();
     axios.interceptors.request.use(function (config) {
@@ -53,5 +55,5 @@ const isLogin = () => {
 setHeader();
 
 export default {
-    signIn, signOut, getAuth, isLogin
+    signIn, signOut, getAuth, isLogin, setHeader, saveAuthToLocalStorage
 }

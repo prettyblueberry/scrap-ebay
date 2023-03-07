@@ -42,11 +42,11 @@ function Cover() {
   const [pwd, setPwd] = useState("");
   const [confirm, setConfirm] = useState("");
   const navigate = useNavigate();
-  const redirect = "/authentication/sign-in/basic";
+  const redirect = "/";
 
   const handleSubmit = () => {
     if(pwd !== confirm) alert("Password confirm error!");
-    userController.saveRow({name, email, pwd, isNew: true}).then(()=>{
+    userController.signUp({name, email, pwd}).then((res)=>{
       return navigate(redirect);
     });
   }

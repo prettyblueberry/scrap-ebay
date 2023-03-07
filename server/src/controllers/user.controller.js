@@ -11,6 +11,15 @@ const search = (query, req, res) => {
     })
 }
 
+const signUp = (body, req, res)=>{
+    userModel.inputRow({ ...body, isNew: true }, (qb, err, user)=>{
+        qb.release();
+        if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
+        const auth = authController.makeAuthResponse(user);
+        res.json(auth);
+    })
+}
+
 //patch
 const saveOne = (body, req, res) => {
     delete body["no"];
@@ -48,6 +57,7 @@ const updatePassword = (body, req, res) => {
 
 export default {
     search,
+    signUp,
     deleteOne,
     saveOne,
     updatePassword
