@@ -3,15 +3,20 @@ import itemController from "../../../controllers/item";
 import {useEffect, useState} from "react";
 
 
-export default function ItemLoadDataGrid({ loads }){
+export default function ItemLoadDataGrid({ loads,updateSignal, ...props }){
     const [rows, setRows] = useState([]);
     const [filteredRows, setFilteredRows] = useState([]);
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
+        setLoading(true);
         itemController.getAll().then((res)=>{
             setRows(res.data);
             setFilteredRows(res.data);
+        }).finally(()=>{
+            setLoading(false);
         });
-    }, []);
+    }, [updateSignal]);
 
     useEffect(()=>{
         if(rows.length > 0){
@@ -21,6 +26,6 @@ export default function ItemLoadDataGrid({ loads }){
     }, [loads])
 
     return(
-        <ItemDataGrid rows={filteredRows}/>
+        <ItemDataGrid rows={filteredRows} loading={loading} {...props}/>
     );
 }

@@ -102,7 +102,7 @@ function LoadManage() {
                                     <Grid item md={12}>
                                         <Grid item md={12}>
                                             <MDBox m={2}>
-                                                <ItemLoadDataGrid loads={filteredLoads} />
+                                                <ItemLoadDataGrid loads={filteredLoads} updateSignal={updateSignal}/>
                                             </MDBox>
                                         </Grid>
                                     </Grid>

@@ -69,6 +69,7 @@ export default function LoadDataGrid({setFilteredRows,updateSignal,loadingData, 
                 loadingOverlay: LinearProgress,
             }}
             loading={loading}
+            defaultPageSize={10}
             {...props}
 
         />
