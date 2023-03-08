@@ -40,7 +40,6 @@ const loadAllSellers = (callback) => {
 
 const loadOneSeller = (s, maxItems, callback) => {
     scrapHelper.scrapBySeller(s.login, maxItems, (rawItems, url)=>{
-        console.log(rawItems);
         loadModel.inputRow({sellerId: s.id, srcUrl: url, isNew: true}, (qb, err, dbLoad) => {
             const items = rawItems.map((item) => ({
                 loadId: dbLoad.id,
@@ -68,7 +67,7 @@ const loadOneSeller = (s, maxItems, callback) => {
                 type: item.type,
                 datetimeCreated: new Date().toISOString(),
                 condition: item.condition,
-                datetimeUpdated: item.lastUpdated ? new Date(item.lastUpdated).toISOString(): null,
+                datetimeUpdated: item.lastUpdated ? new Date(item.lastUpdated): null,
             }));
             itemModel.insertBatch(qb, items, callback)
         });
