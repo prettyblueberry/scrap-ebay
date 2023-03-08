@@ -1,5 +1,4 @@
 import axios from "controllers/axios"
-import moment from "moment";
 
 const getTime = ()=>{
     return axios.get('/schedule', {}).then((res)=>{
@@ -8,6 +7,7 @@ const getTime = ()=>{
     });
 };
 const saveTime = (time) => {
+    console.log(time);
     return axios.patch('/schedule', {time: time});
 };
 
