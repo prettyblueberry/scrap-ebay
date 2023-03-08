@@ -2,6 +2,7 @@ import HS from "http-status-codes";
 import scheduleModel from "../models/schedule.model.js";
 import schedule from "node-schedule";
 import loadController from "./load.controller.js";
+import moment from "moment";
 
 let scheduleJob = null;
 const setScheduleJob = () => {
@@ -12,17 +13,16 @@ const setScheduleJob = () => {
     scheduleModel.getWhere({}, (qb, err, times)=>{
         qb.release();
         if(times.length > 0 ){
-            const time = times[0].time.toISOString();
-            const h = time.substring(11,13);
-            const m = time.substring(14, 16);
-            const s = time.substring(17, 19);
-            scheduleJob = schedule.scheduleJob(`${s} ${m} ${h} * * *`, function(){
-                console.log("schedule job start:" , `${h}:${m}:${s}`)
+            const time = times[0].time;
+            const timeSchedule = moment(new Date(time)).format("ss mm HH")
+            const timeStr = moment(new Date(time)).format("HH:mm:ss")
+            scheduleJob = schedule.scheduleJob(`${timeSchedule} * * *`, function(){
+                console.log("schedule job start:" , timeStr)
                 loadController.loadAllSellers(()=>{
                     console.log("schedule job finish")
                 });
             });
-            console.log("new schedule job has been created:" , `${h}:${m}:${s}`)
+            console.log("new schedule job has been created:" , timeStr)
         }
     })
 };
