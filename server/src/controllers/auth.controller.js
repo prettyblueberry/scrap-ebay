@@ -8,8 +8,10 @@ const verify = (email, reqPwd, dbPwd) =>{
 
 const signIn = ({email, pwd}, req, res) => {
     verifyUser({ email }, pwd, ({status, data}) => {
-        if(status === HS.OK)
-            return makeAuthResponse(data);
+        if(status === HS.OK){
+            const auth = makeAuthResponse(data);
+            return res.json(auth);
+        }
         res.status(status).json(data);
     });
 };
