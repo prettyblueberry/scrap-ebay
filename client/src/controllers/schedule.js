@@ -7,7 +7,6 @@ const getTime = ()=>{
     });
 };
 const saveTime = (time) => {
-    console.log(time);
     return axios.patch('/schedule', {time: time});
 };
 
