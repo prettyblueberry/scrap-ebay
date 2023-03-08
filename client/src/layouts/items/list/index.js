@@ -30,8 +30,12 @@ import itemController from "../../../controllers/item";
 
 function ItemList() {
   const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
+    setLoading(true);
     itemController.getLatest().then((res)=>{
+      setLoading(false);
       setRows(res.data);
     });
   }, []);
@@ -52,7 +56,7 @@ function ItemList() {
             </MDTypography>
           </MDBox>
           <MDBox m={1} ml={2} mr={2}>
-            <ItemDataGrid rows={rows}/>
+            <ItemDataGrid rows={rows} loading={loading}/>
           </MDBox>
         </Card>
       </MDBox>

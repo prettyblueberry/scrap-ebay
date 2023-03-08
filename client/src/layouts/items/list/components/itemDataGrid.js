@@ -35,7 +35,7 @@ const columns = [
     { field: 'datetimeCreated', headerName: 'DatetimeCreated', width: 200,  headerAlign:'center' },
 ];
 
-function ItemDataGrid({ rows }) {
+function ItemDataGrid({ rows, ...props }) {
     const [pageSize, setPageSize] = React.useState(10);
 
     return (
@@ -67,7 +67,7 @@ function ItemDataGrid({ rows }) {
                   pagination
                   autoHeight
                   rowHeight={200}
-                  // loading
+                      {...props}
             />
         </div>
     );
