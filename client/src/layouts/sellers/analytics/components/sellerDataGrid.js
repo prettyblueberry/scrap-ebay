@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DataGrid, GridToolbar  } from '@mui/x-data-grid';
 import LinearProgress from '@mui/material/LinearProgress';
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 const columns = [
     { field: 'id', headerName: 'Id', width: 50 , hide: true, align:"center"},
@@ -13,9 +13,10 @@ const columns = [
     { field: 'soldLast30', headerName: 'SoldIn30D', width: 100, align:"right", headerAlign:'center', type:"number" },
 ];
 
-function SellerDataGrid({ rows, setFilteredRows}) {
+function SellerDataGrid({ rows, setFilteredRows, ...props}) {
     const [pageSize, setPageSize] = React.useState(25);
     const [selectionModel, setSelectionModel] = React.useState([]);
+
 
     useEffect(()=>{
         setSelectionModel(rows.map((r)=>r.id));
@@ -55,7 +56,8 @@ function SellerDataGrid({ rows, setFilteredRows}) {
                   setSelectionModel(changed);
                   setFilteredRows(rows.filter((r)=>changed.includes(r.id) ));
               }}
-              // loading
+                      {...props}
+                //loading
             />
         </div>
     );

@@ -43,9 +43,12 @@ import sellerController from "../../../controllers/seller";
 function SellerList() {
   const [rows, setRows] = useState([]);
   const [filteredRows, setFilteredRows] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(()=>{
+    setLoading(true);
     sellerController.getAnalytics().then((res)=>{
+      setLoading(false);
       setRows(res.data);
       setFilteredRows(res.data);
     });
@@ -79,6 +82,7 @@ function SellerList() {
                     <MDBox m={2}>
                       <SellerDataGrid rows={ rows }
                                       setFilteredRows={setFilteredRows}
+                                      loading={loading}
                       />
                     </MDBox>
                   </Grid>
