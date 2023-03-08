@@ -6,12 +6,17 @@ import moment from "moment";
 
 export default function SellerManageGrid() {
     const [rows, setRawRows] = useState([]);
+    const [loading, setLoading] = useState(false);
+
     const setRows = (rows)=> {
         return setRawRows([...rows.map((r, i)=>({...r, no: i + 1}))]);
     };
     useEffect(() => {
+        setLoading(true);
         sellerController.getAll().then((res)=>{
             setRows(res.data);
+        }).finally(()=>{
+            setLoading(false);
         });
     }, []);
 
@@ -46,6 +51,7 @@ export default function SellerManageGrid() {
             onSaveRow={onSaveRow}
             onDeleteRow={onDeleteRow}
             createRowData={createRowData}
+            loading={loading}
         />
     );
 }
