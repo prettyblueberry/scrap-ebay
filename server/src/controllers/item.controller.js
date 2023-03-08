@@ -12,7 +12,6 @@ const search = (query, req, res) => {
 
 const latest = (req, res) => {
     itemModel.getLatest({}, (qb, err, items)=>{
-        console.log(qb.last_query())
         qb.release();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         res.json(items);

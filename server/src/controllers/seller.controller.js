@@ -1,5 +1,7 @@
 import HS from "http-status-codes";
 import sellerModel from "../models/seller.model.js";
+import loadModel from "../models/load.model.js";
+import itemModel from "../models/item.model.js";
 
 //get
 const search = (query, req, res) => {
@@ -12,15 +14,46 @@ const search = (query, req, res) => {
 
 //analytics
 const analytics = (req, res) => {
-    sellerModel.getWhere({},(qb, err, sellers)=>{
+    loadModel.getLastDate((qb, err, lastDate)=>{
         qb.release();
-        if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
-        const analytics = sellers.map((s) => {
-            return {...s}
-        });
-        res.json(analytics);
-    })
+        sellerModel.getWhere({},(qb, err, sellers)=>{
+            const resData = [];
+            if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
+            if(sellers.length ===0) res.json(resData);
+            let promise = new Promise((resolve)=>{ resolve(qb);});
+            for(let i = 0 ; i < sellers.length; i++){
+                promise = promise.then((qb)=>{
+                    return analyticsSingle(qb, sellers[i], lastDate);
+                }).then(({qb, single})=>{
+                    resData.push(single);
+                    return qb;
+                });
+            }
+            promise.then((qb)=>{
+                qb.release();
+                res.json(resData);
+            });
+        })
+    });
 }
+
+const analyticsSingle = (qb, seller, lastDate) => {
+    const mapped = {...seller};
+    return itemModel.getSoldPeriod(qb,seller.id,lastDate,1)
+        .then(({qb, soldData})=>{
+            mapped.soldLast1 = soldData.sold_amount;
+            return itemModel.getSoldPeriod(qb,seller.id,lastDate,7)
+        })
+        .then(({qb, soldData})=>{
+            mapped.soldLast7 = soldData.sold_amount;
+            return itemModel.getSoldPeriod(qb,seller.id,lastDate,30)
+        })
+        .then(({qb, soldData}) => {
+            mapped.soldLast30 = soldData.sold_amount;
+            return {qb, single: mapped};
+        })
+};
+
 
 //patch
 const saveOne = (body, req, res) => {

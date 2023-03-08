@@ -1,11 +1,10 @@
 import dbCon from "./dbcon.js";
-
 const tblName = "sellers";
 
 const SellerModel = {
     //common
     getWhere : function (where = {}, callback) {
-        dbCon().then((qb)=>{
+        dbCon().then((qb) => {
             if(Object.keys(where).length > 0){
                 qb.get_where(tblName, where, (err, res)=>{
                     if(err) {

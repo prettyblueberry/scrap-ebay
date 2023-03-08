@@ -1,8 +1,44 @@
 import dbCon from "./dbcon.js";
-
+import moment from "moment";
 const tblName = "loads";
 
 const LoadModel = {
+    //custom
+    getLastDate: function(callback) {
+        dbCon().then((qb)=>{
+            qb.limit(1).order_by("datetimeCreated", "DESC")
+                .get(tblName, (err, res) => {
+                    if(err){
+                        console.error(err);
+                        return callback(qb, err);
+                    }
+                    if(res.length > 0) callback(qb, null, res[0].datetimeCreated);
+                    else {
+                        const err = new Error("empty select!");
+                        console.error(err)
+                        return callback(qb, err);
+                    }
+                });
+        })
+    },
+
+    getRecentRowFrom: function(qb, sellerId, date) {
+        return new Promise((resolve, reject) => {
+            dbCon(qb).then((qb) => {
+                qb.limit(1)
+                    .where('sellerId', sellerId)
+                    .where('DATE(`datetimeCreated`) <= DATE("' + moment(date).format("YYYY-MM-DD") + '")')
+                    .order_by("datetimeCreated", "DESC")
+                    .get(tblName, (err, res) => {
+                        if (err) {
+                            console.error(err);
+                            return reject({qb, err});
+                        }
+                        return resolve({qb, rows: res});
+                    })
+            });
+        });
+    },
     //common
     getWhere : function (where = {}, callback) {
         dbCon().then((qb)=>{
@@ -128,7 +164,8 @@ const LoadModel = {
                 callback(qb, null, oldRow);
             })
         });
-    }
+    },
+
 };
 
 export default LoadModel;

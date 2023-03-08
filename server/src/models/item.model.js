@@ -1,8 +1,60 @@
 import dbCon from "./dbcon.js";
-
+import moment from 'moment';
+import loadModel from "./load.model.js";
 const tblName = "items";
 
 const ItemsModel = {
+    //loads
+//custom
+    getSoldPeriod: function(qb, sellerId, lastDate, periodDays ){
+        const beforeDate = moment(lastDate).add(0 - periodDays, 'day').format('YYYY-MM-DD');
+        let lastSoldData, beforeSoldData;
+        return dbCon(qb)
+            .then((qb) => {
+                return loadModel.getRecentRowFrom(qb, sellerId, lastDate)
+            })
+            .then(({qb, rows})=>{
+                if(rows.length === 0) return {qb, soldData: {sum_sold_amount: 0, sum_sold: 0 }}
+                const lastLoadRow = rows[0];
+                const loadId = lastLoadRow.id;
+                return this.getSoldPriceCostByLoadId(qb, loadId);
+            })
+            .then(({qb, soldData})=>{
+                lastSoldData = soldData;
+                return loadModel.getRecentRowFrom(qb, sellerId, beforeDate)
+            })
+            .then(({qb, rows})=>{
+                if(rows.length === 0) return {qb, soldData: {sum_sold_amount: 0, sum_sold: 0 }}
+                const beforeLoadRow = rows[0];
+                const loadId = beforeLoadRow.id;
+                return this.getSoldPriceCostByLoadId(qb, loadId);
+            })
+            .then(({qb, soldData})=>{
+                beforeSoldData = soldData;
+                const diff = {
+                    sold: lastSoldData.sum_sold - beforeSoldData.sum_sold,
+                    sold_amount: lastSoldData.sum_sold_amount - beforeSoldData.sum_sold_amount
+                };
+                return {qb, soldData: diff};
+            });
+    },
+    getSoldPriceCostByLoadId: function(qb, loadId){
+        return new Promise((resolve, reject)=>{
+            dbCon(qb).then((qb)=>{
+                qb.select_sum('sold', 'sum_sold')
+                    .select_sum('sold * price', 'sum_sold_amount').group_by('loadId')
+                    .where({ loadId: loadId })
+                    .get(tblName, (err, res) => {
+                    if(err) {
+                        console.error(err);
+                        return reject(err);
+                    }
+                    if(res.length > 0) return resolve({qb, soldData: res[0]});
+                    return reject(new Error("empty select!"));
+                });
+            });
+        });
+    },
     //common
     getWhere : function (where = {}, callback) {
         dbCon().then((qb)=>{
