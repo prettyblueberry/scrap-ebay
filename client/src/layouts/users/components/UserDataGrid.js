@@ -7,10 +7,15 @@ import authController from "../../../controllers/auth";
 export default function UserDataGrid() {
     const [rows, setRows] = useState([]);
     const [selectionModel, setSelectionModel] = React.useState(() => rows.map((r)=>r.id));
+    const [loading, setLoading] = useState(false);
+
 
     useEffect(() => {
+        setLoading(true);
         userController.getAll().then((res)=>{
             setRows(res.data);
+        }).finally(()=>{
+            setLoading(false);
         });
     }, []);
 
@@ -35,6 +40,7 @@ export default function UserDataGrid() {
             rows={rows}
             onDeleteRow={onDeleteRow}
             selectionModel={selectionModel}
+            loading={loading}
         />
     );
 }
