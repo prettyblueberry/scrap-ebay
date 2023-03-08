@@ -19,6 +19,8 @@ const columns = [
     { field: 'available', headerName: 'Quantity Available', width: 150, align:"right", headerAlign:'center', type:"number" },
     { field: 'Sold', headerName: 'Solid Quantity', width: 150, align:"right", headerAlign:'center', type:"number" },
     { field: 'itemLocation', headerName: 'ItemLocation', width: 150, align:"right", headerAlign:'center' },
+    { field: 'condition', headerName: 'Condition', width: 150, align:"right", headerAlign:'center' },
+    { field: 'datetimeUpdated', headerName: 'DateUpdated', width: 200, align:"right", headerAlign:'center' },
     { field: 'url', headerName: 'Link', width: 100,  headerAlign:'center', type: 'string', editable: false, cellClassName: "actions", align: "center",
         renderCell: ({ value }) => {
             return (
