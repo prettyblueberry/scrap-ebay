@@ -9,19 +9,41 @@ import {
 } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import {Link} from "react-router-dom";
+import LinearProgress from '@mui/material/LinearProgress';
 
-export default function LoadDataGrid({setFilteredRows}) {
+
+export default function LoadDataGrid({setFilteredRows,updateSignal,loadingData, ...props}) {
     const [rows, setRawRows] = useState([]);
     const [selectionModel, setSelectionModel] = React.useState(() => rows.map((r)=>r.id));
+    const [loading, setLoading] = useState(false);
 
     const setRows = (rows)=> {
         return setRawRows([...rows.map((r, i)=>({...r, no: i + 1}))]);
     };
-    useEffect(() => {
+
+    const getRows = () => {
+        setLoading(true);
         loadController.getAll().then((res)=>{
-            setRows(res.data);
+            const sorted = res.data.sort(function(a,b){
+                // Turn your strings into dates, and then subtract them
+                // to get a value that is either negative, positive, or zero.
+                return new Date(b.datetimeCreated) - new Date(a.datetimeCreated);
+            });
+            setRows(sorted);
+        }).finally(()=>{
+            setLoading(false);
         });
-    }, []);
+    };
+
+    useEffect(() => {
+        getRows();
+
+    },[updateSignal]);
+    useEffect(()=>{
+        if(loadingData === true)
+            setLoading(true);
+    },[loadingData]);
+
 
     const onDeleteRow = (id, oldRow, rows) => {
         loadController.deleteRow(id).then((res)=>{
@@ -43,6 +65,12 @@ export default function LoadDataGrid({setFilteredRows}) {
                 setSelectionModel(changed);
                 setFilteredRows(rows.filter((r) => changed.includes(r.id) ));
             }}
+            slots={{
+                loadingOverlay: LinearProgress,
+            }}
+            loading={loading}
+            {...props}
+
         />
     );
 }

@@ -16,9 +16,13 @@ import ScheduleTimePicker from "./components/scheduleTimePicker";
 
 function LoadManage() {
     const [filteredLoads, setFilteredLoads] = useState([]);
+    const [updateSignal, setUpdateSignal] = useState(0);
+    const [loadingData, setLoadingData] = useState(false);
     const loadAll = ()=>{
+        setLoadingData(true);
         loadController.loadAll().then(()=>{
-            LoadManage.forceUpdate();
+            setUpdateSignal(updateSignal + 1);
+            setLoadingData(false);
         });
     };
 
@@ -70,7 +74,7 @@ function LoadManage() {
                                     <Grid item md={12}>
                                         <Grid item md={12}>
                                             <MDBox m={2}>
-                                                <LoadDataGrid setFilteredRows={setFilteredLoads}
+                                                <LoadDataGrid setFilteredRows={setFilteredLoads} updateSignal={updateSignal} loadingData={loadingData}
                                                 />
                                             </MDBox>
                                         </Grid>

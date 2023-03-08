@@ -15,7 +15,7 @@ const scrap =  (url, maxItems, callback) => {
                 "url": url
             }
         ],
-        "maxItems": maxItems,
+        "maxItems": maxItems * 1,
         "proxyConfig": {
             "useApifyProxy": true
         }
