@@ -13,6 +13,15 @@ const signIn = ( email, pwd ) => {
     });
 }
 
+const signUp = (row) => {
+    return axios.put('/auth', row)
+        .then((res)=>{
+            saveAuthToLocalStorage(res.data);
+            setHeader();
+            return res;
+        });
+};
+
 const getAuth = () => {
     const auth = localStorage.getItem("auth");
     if((!auth) || auth === "" || auth === "null" || auth === "NULL" || auth === "false")
@@ -21,6 +30,8 @@ const getAuth = () => {
 }
 
 const signOut = () => {
+    axios.delete('/auth');
+
     localStorage.setItem("auth", "");
     setHeader();
     // return axios.delete('/auth')
@@ -55,5 +66,6 @@ const isLogin = () => {
 setHeader();
 
 export default {
-    signIn, signOut, getAuth, isLogin, setHeader, saveAuthToLocalStorage
+    signIn, signUp, signOut,
+    getAuth, isLogin, setHeader, saveAuthToLocalStorage
 }

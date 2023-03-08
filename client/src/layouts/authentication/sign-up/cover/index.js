@@ -32,10 +32,9 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 import {useState} from "react";
-import userController from "../../../../controllers/user";
+import authController from "../../../../controllers/auth";
 import { useNavigate } from "react-router-dom";
 import MDAlert from "../../../../components/MDAlert";
-
 
 function Cover() {
   const [name, setName] = useState("");
@@ -44,15 +43,28 @@ function Cover() {
   const [confirm, setConfirm] = useState("");
   const navigate = useNavigate();
   const redirect = "/";
-  const [success, setSuccess] = useState({status: false, reason: ""});
+  const [alert, setAlert] = useState({show: false, color: "", message: ""});
+  const [isEmailError, setIsEmailError] = useState(false);
+  const [isConfirmError, setIsConfirmError] = useState(false);
 
   const handleSubmit = () => {
-    if(pwd !== confirm) alert("Password confirm error!");
-    userController.signUp({name, email, pwd}).then((res)=>{
-      setSuccess(true)
+    if(pwd !== confirm) {
+      setAlert({show: true, color: "error", message: "Password confirm error!"});
+      setIsConfirmError(true);
+      return;
+    }
+    authController.signUp({name, email, pwd}).then((res)=>{
+      setAlert({ show: true, color: "success", message: "Success!" });
       setTimeout(()=>{
         return navigate(redirect);
       }, 1000);
+    }).catch((err)=>{
+      if(err.response.data.code === "ER_DUP_ENTRY"){
+        setIsEmailError(true);
+        setAlert({ show: true, color: "error", message: "Duplicated Email!" });
+        return;
+      }
+      setAlert({ show: true, color: "error", message: "Failed!" });
     });
   }
 
@@ -78,10 +90,10 @@ function Cover() {
           </MDTypography>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
-          { success === true ?
-                <MDAlert color="success" dismissible>
+          { alert.show === true ?
+                <MDAlert color={alert.color}>
                   <MDTypography variant="body2" color="white">
-                  Success!
+                    {alert.message}
                   </MDTypography>
                 </MDAlert>: "" }
 
@@ -90,13 +102,13 @@ function Cover() {
               <MDInput type="text" label="Name" variant="standard" fullWidth value={name} onChange={(event)=> setName(event.target.value) }/>
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" variant="standard" fullWidth value={email} onChange={(event)=> setEmail(event.target.value) }/>
+              <MDInput type="email" label="Email" variant="standard" fullWidth value={email} onChange={(event)=> setEmail(event.target.value)} error={isEmailError}/>
             </MDBox>
             <MDBox mb={2}>
               <MDInput type="password" label="Password" variant="standard" fullWidth value={pwd} onChange={(event)=> setPwd(event.target.value) }/>
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Confirm" variant="standard" fullWidth value={confirm} onChange={(event)=> setConfirm(event.target.value) }/>
+              <MDInput type="password" label="Confirm" variant="standard" fullWidth value={confirm} onChange={(event)=> setConfirm(event.target.value) } error={isConfirmError}/>
             </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="info" fullWidth onClick={handleSubmit}>

@@ -55,6 +55,11 @@ function Basic() {
       setUnauthorized({status: true, reason: err.response.data.reason});
     });
   };
+  const keyPress = (e) => {
+    if(e.keyCode === 13){
+      handleSignInButton();
+    }
+  }
 
   return (
     <BasicLayout image={bgImage}>
@@ -78,7 +83,7 @@ function Basic() {
         <MDBox pt={4} pb={3} px={3}>
           {
             unauthorized.status === true ?
-              <MDAlert color="primary" dismissible>
+              <MDAlert color="primary">
                 <MDTypography variant="body2" color="white">
                   {
                     unauthorized.reason === "email" ? "Unregistered email address." : "Password is incorrect."
@@ -92,7 +97,7 @@ function Basic() {
               <MDInput type="email" label="Email" fullWidth value={email} onChange={(evt)=>{setEmail(evt.target.value)}} />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth value={pwd} onChange={(evt)=>{setPwd(evt.target.value)}}  />
+              <MDInput type="password" label="Password" fullWidth value={pwd} onChange={(evt)=>{setPwd(evt.target.value)}} onKeyDown={keyPress} />
             </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="info" fullWidth onClick={handleSignInButton}>

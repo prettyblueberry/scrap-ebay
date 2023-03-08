@@ -16,6 +16,18 @@ const signIn = ({email, pwd}, req, res) => {
     });
 };
 
+const signUp = (body, req, res)=>{
+    userModel.inputRow({ ...body, isNew: true }, (qb, err, user)=>{
+        qb.release();
+        if(err) {
+            const errRes = makeMySqlErrResponse(err);
+            return res.status(HS.INTERNAL_SERVER_ERROR).json(errRes);
+        }
+        const auth = makeAuthResponse(user);
+        res.json(auth);
+    })
+}
+
 const verifyUser = (where, pwd, callback) => {
     userModel.find(where, (user)=>{
         if(!user) {
@@ -57,5 +69,5 @@ export default {
     signIn,
     signOut,
     verifyUser,
-    makeAuthResponse
+    signUp,
 }

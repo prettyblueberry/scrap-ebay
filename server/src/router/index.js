@@ -16,10 +16,8 @@ router.post('/auth', (req, res)=>{
 router.delete('/auth', (req, res)=>{
     return authController.signOut(req, res);
 });
-
-//save, sign up
-router.post('/user', function(req, res){
-    return userController.signUp(req.body, req, res);
+router.put('/auth', function(req, res){
+    return authController.signUp(req.body, req, res);
 });
 
 router.use(authMiddleware);
@@ -39,17 +37,7 @@ router.get('/item/latest', itemController.latest);
 
 routeRestful('/schedule', scheduleController, router);
 
-//user
-//search
-router.get('/user', function(req, res){
-    return userController.search(req.query, req, res);
-});
-router.patch('/user', function(req, res){
-    return userController.saveOne(req.body, req, res);
-});
-router.delete("/user/:id", function(req, res){
-    return userController.deleteOne(req.params.id, req, res);
-});
+routeRestful('/user', userController, router);
 //update password
 router.patch('/user/pwd', (req, res)=>{
     userController.updatePassword(req.body, req, res);

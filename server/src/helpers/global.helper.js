@@ -38,3 +38,9 @@ global.routeRestful = (path, controller, router) => {
             return controller.deleteOne(req.params.id, req, res);
         });
 }
+
+global.makeMySqlErrResponse = (err) => ({
+    code: err.code,
+    errno: err.errno,
+    sqlMessage: err.sqlMessage
+});
