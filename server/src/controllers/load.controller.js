@@ -65,7 +65,7 @@ const loadOneSeller = (s, maxItems, callback) => {
                 upc: item.upc,
                 brand: item.brand,
                 type: item.type,
-                datetimeCreated: new Date().toISOString(),
+                datetimeCreated: new Date(),
                 condition: item.condition,
                 datetimeUpdated: item.lastUpdated ? new Date(item.lastUpdated): null,
             }));
