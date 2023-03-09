@@ -13,13 +13,30 @@ import {useState} from "react";
 import ItemLoadDataGrid from "./components/ItemLoadDataGrid";
 import loadController from "../../controllers/load";
 import ScheduleTimePicker from "./components/scheduleTimePicker";
+import MDSnackbar from "../../components/MDSnackbar";
 
 function LoadManage() {
     const [filteredLoads, setFilteredLoads] = useState([]);
     const [updateSignal, setUpdateSignal] = useState(0);
     const [loadingData, setLoadingData] = useState(false);
+    const [infoSB, setInfoSB] = useState(false);
+    const openInfoSB = () => setInfoSB(true);
+    const closeInfoSB = () => setInfoSB(false);
+    const renderInfoSB = (
+        <MDSnackbar
+            icon="warning"
+            title="Please Wait."
+            content="It takes several minutes to load all data from eBay."
+            dateTime=""
+            open={infoSB}
+            onClose={closeInfoSB}
+            close={closeInfoSB}
+        />
+    );
+
     const loadAll = ()=>{
-        setLoadingData(true);
+        // setLoadingData(true);
+        openInfoSB();
         loadController.loadAll().then(()=>{
             setUpdateSignal(updateSignal + 1);
             setLoadingData(false);
@@ -61,6 +78,7 @@ function LoadManage() {
                                             <MDButton variant="gradient" color="info" ml={2} onClick={loadAll}>
                                                 Load
                                             </MDButton>
+                                            {renderInfoSB}
                                         </MDBox>
                                     </MDBox>
                                 </MDBox>

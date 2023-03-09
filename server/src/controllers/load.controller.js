@@ -3,6 +3,7 @@ import loadModel from "../models/load.model.js";
 import sellerModel from "../models/seller.model.js";
 import itemModel from "../models/item.model.js";
 import scrapHelper from "../helpers/apify-ebay-scraper.helper.js";
+import moment from "moment";
 
 //get
 const search = (query, req, res) => {
@@ -65,9 +66,9 @@ const loadOneSeller = (s, maxItems, callback) => {
                 upc: item.upc,
                 brand: item.brand,
                 type: item.type,
-                datetimeCreated: new Date(),
+                datetimeCreated: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss "),
                 condition: item.condition,
-                datetimeUpdated: item.lastUpdated ? new Date(item.lastUpdated): null,
+                datetimeUpdated: item.lastUpdated ? moment(new Date(item.lastUpdated)).format("YYYY-MM-DDTHH:mm:ss "): null,
             }));
             itemModel.insertBatch(qb, items, callback)
         });
