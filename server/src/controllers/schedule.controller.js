@@ -38,7 +38,8 @@ const search = (query, req, res) => {
 
 //patch
 const saveOne = (body, req, res) => {
-    scheduleModel.inputRow({id: 1, time: body.time}, (qb, err, time)=>{
+    const time = new Date(body.time).toISOString();
+    scheduleModel.inputRow({id: 1, time: time}, (qb, err, time)=>{
         qb.release();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         setScheduleJob();

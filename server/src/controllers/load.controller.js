@@ -66,9 +66,9 @@ const loadOneSeller = (s, maxItems, callback) => {
                 upc: item.upc,
                 brand: item.brand,
                 type: item.type,
-                datetimeCreated: moment(new Date()).format("YYYY-MM-DDTHH:mm:ss "),
+                datetimeCreated: (new Date(Date.now())).toISOString(),
                 condition: item.condition,
-                datetimeUpdated: item.lastUpdated ? moment(new Date(item.lastUpdated)).format("YYYY-MM-DDTHH:mm:ss "): null,
+                datetimeUpdated: item.lastUpdated ? (new Date(item.lastUpdated)).toISOString(): null,
             }));
             itemModel.insertBatch(qb, items, callback)
         });
