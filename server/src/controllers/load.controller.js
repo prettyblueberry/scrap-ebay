@@ -49,7 +49,7 @@ const loadOneSeller = (s, maxItems, callback) => {
                 url: item.url,
                 categories: JSON.stringify(item.categories),
                 subTitle: item.subTitle,
-                endedDate: item.endedDate,
+                endedDate: moment(new Date(item.endedDate)).format("YYYY-MM-DD HH:mm:ss"),
                 price: item.price,
                 priceWithCurrency: item.priceWithCurrency,
                 wasPrice: item.wasPrice,
