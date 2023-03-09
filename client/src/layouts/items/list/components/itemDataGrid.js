@@ -5,6 +5,18 @@ import ImageCell from "../../list/components/imageCell";
 import MDBox from "../../../../components/MDBox";
 import LinkIcon from "@mui/icons-material/LinkOutlined";
 
+const currencyFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+});
+
+const usdPrice = {
+    type: 'number',
+    width: 200,
+    valueFormatter: ({ value }) => currencyFormatter.format(value),
+    cellClassName: 'font-tabular-nums',
+};
+
 const columns = [
     { field: 'id', headerName: 'Id', width: 50 , hide: true, align:"center", type: "number"},
     { field: 'itemNumber', headerName: 'Number', width: 200 , headerAlign:'center',  align:"center", type: "string"},
@@ -15,7 +27,7 @@ const columns = [
     },
     { field: 'title', headerName: 'Title', width: 150 , headerAlign:'center'},
     { field: 'seller', headerName: 'Seller', width: 200, headerAlign:'center' },
-    { field: 'priceWithCurrency', headerName: 'Price', width: 100, align:"right", headerAlign:'center', type:"number"},
+    { field: 'price', headerName: 'Price', align:"right", headerAlign:'center', ...usdPrice},
     { field: 'available', headerName: 'Quantity Available', width: 150, align:"right", headerAlign:'center', type:"number" },
     { field: 'Sold', headerName: 'Solid Quantity', width: 150, align:"right", headerAlign:'center', type:"number" },
     { field: 'itemLocation', headerName: 'ItemLocation', width: 150, align:"right", headerAlign:'center' },
