@@ -50,7 +50,7 @@ const ItemsModel = {
                         return reject(err);
                     }
                     if(res.length > 0) return resolve({qb, soldData: res[0]});
-                    return reject(new Error("empty select!"));
+                    return resolve({qb, soldData: {sum_sold: 0, sum_sold_amount: 0}});
                 });
             });
         });
