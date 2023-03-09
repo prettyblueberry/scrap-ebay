@@ -138,7 +138,7 @@ const ItemsModel = {
     insertRow : function (row, callback) {
         const findRowById = this.findRowById;
         ///special
-        row.datetimeCreated = new Date().toISOString();
+        row.datetimeCreated =  moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
 
         dbCon().then((qb)=>{
             qb.insert(tblName, row, function(err, res) {

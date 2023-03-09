@@ -1,4 +1,5 @@
 import dbCon from "./dbcon.js";
+import moment from "moment";
 const tblName = "sellers";
 
 const SellerModel = {
@@ -58,7 +59,7 @@ const SellerModel = {
     insertRow : function (row, callback) {
         const findRowById = this.findRowById;
         ///special
-        row.dateCreated = new Date().toISOString();
+        row.dateCreated =  moment(new Date()).format("YYYY-MM-DD");
 
         dbCon().then((qb)=>{
         qb.insert(tblName, row, function(err, res) {
