@@ -27,8 +27,8 @@ router.get('/seller/analytics', sellerController.analytics);
 
 routeRestful('/load', loadController, router);
 router.post('/load/all', (req, res)=>{
+    res.sendStatus(HS.OK);
     loadController.loadAllSellers(()=>{
-        res.sendStatus(HS.OK);
     });
 })
 
