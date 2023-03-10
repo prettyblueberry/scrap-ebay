@@ -33,7 +33,7 @@ import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import bgImage from "assets/images/is-it-worth-selling-on-ebay-1200x750.png";
 
 //custom
 import {useNavigate} from "react-router-dom";

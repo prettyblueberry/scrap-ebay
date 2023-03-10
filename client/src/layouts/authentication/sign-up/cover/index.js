@@ -30,7 +30,7 @@ import MDButton from "components/MDButton";
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
-import bgImage from "assets/images/bg-sign-up-cover.jpeg";
+import bgImage from "assets/images/eBay-Listing-Software-to-Opt-for-in-2022.jpg";
 import {useState} from "react";
 import authController from "../../../../controllers/auth";
 import { useNavigate } from "react-router-dom";
