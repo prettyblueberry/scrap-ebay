@@ -29,7 +29,7 @@ const columns = [
     { field: 'seller', headerName: 'Seller', width: 200, headerAlign:'center' },
     { field: 'price', headerName: 'Price', align:"right", headerAlign:'center', ...usdPrice},
     { field: 'available', headerName: 'Quantity Available', width: 150, align:"right", headerAlign:'center', type:"number" },
-    { field: 'Sold', headerName: 'Solid Quantity', width: 150, align:"right", headerAlign:'center', type:"number" },
+    { field: 'sold', headerName: 'Solid Quantity', width: 150, align:"right", headerAlign:'center', type:"number" },
     { field: 'itemLocation', headerName: 'ItemLocation', width: 150, align:"right", headerAlign:'center' },
     { field: 'condition', headerName: 'Condition', width: 150, align:"right", headerAlign:'center' },
     { field: 'datetimeUpdated', headerName: 'DateUpdated', width: 200, align:"right", headerAlign:'center' },
