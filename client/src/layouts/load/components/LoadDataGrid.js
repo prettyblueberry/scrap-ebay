@@ -39,6 +39,7 @@ export default function LoadDataGrid({setFilteredRows,updateSignal,loadingData, 
         getRows();
 
     },[updateSignal]);
+
     useEffect(()=>{
         if(loadingData === true)
             setLoading(true);
@@ -81,6 +82,7 @@ const columns = [
     { field: 'datetimeCreated', headerName: 'DateCreated', width:150,  headerAlign:'center', type:'date', editable: false, align: "center", renderCell: ({value})=>(moment(value).format('MM/DD/yyyy hh:mm:ss'))},
     { field: 'sellerLogin', headerName: 'SellerLogin', width: 300 , headerAlign:'center', type:'string',  align:"center", editable: false},
     { field: 'sellerTitle', headerName: 'SellerTitle', width: 150 , headerAlign:'center', type: 'string',  align:"center", editable: false},
+    { field: 'isSchedule', headerName: 'Schedule/Manual', width: 150 , headerAlign:'center', type: 'string',  align:"center", editable: false, renderCell:(value) => value * 1 === 1 ? "S" : "M" },
     { field: 'srcUrl', headerName: 'SourceURL', width: 100,  headerAlign:'center', type: 'string', editable: false, cellClassName: "actions", align: "center",
         renderCell: ({ value }) => {
             return (
