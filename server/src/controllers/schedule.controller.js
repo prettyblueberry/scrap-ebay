@@ -29,8 +29,10 @@ const setScheduleJob = () => {
 
 //get
 const search = (query, req, res) => {
+    console.log("!@#tracker", "schedule get");
     scheduleModel.getWhere(query, (qb, err, times)=>{
         qb.release();
+        console.log("!@#tracker", "schedule result", qb);
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         res.json(times);
     })

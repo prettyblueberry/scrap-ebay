@@ -5,7 +5,9 @@ const tblName = "schedules";
 const ScheduleModel = {
     //common
     getWhere : function (where = {}, callback) {
+        console.log("!@#tracker", "schedule model getWhere");
         dbCon().then((qb)=>{
+            console.log("!@#tracker", "schedule getWhere dbCon");
             if(Object.keys(where).length > 0){
                 qb.get_where(tblName, where, (err, res)=>{
                     if(err) {
