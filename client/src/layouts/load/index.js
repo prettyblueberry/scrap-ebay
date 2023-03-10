@@ -38,7 +38,8 @@ function LoadManage() {
         // setLoadingData(true);
         openInfoSB();
         loadController.loadAll().then(()=>{
-            setUpdateSignal(updateSignal + 1);
+            //setUpdateSignal(updateSignal + 1);
+        }).finally(()=>{
             setLoadingData(false);
         });
     };

@@ -32,8 +32,8 @@ const ItemsModel = {
             .then(({qb, soldData})=>{
                 beforeSoldData = soldData;
                 const diff = {
-                    sold: lastSoldData.sum_sold - beforeSoldData.sum_sold,
-                    sold_amount: lastSoldData.sum_sold_amount - beforeSoldData.sum_sold_amount
+                    sold: lastSoldData.sum_sold * 1 - beforeSoldData.sum_sold * 1,
+                    sold_amount: lastSoldData.sum_sold_amount * 1 - beforeSoldData.sum_sold_amount * 1
                 };
                 return {qb, soldData: diff};
             });
