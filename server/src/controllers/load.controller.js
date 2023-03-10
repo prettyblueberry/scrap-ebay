@@ -17,12 +17,12 @@ const search = (query, req, res) => {
 const maxItems = process.env.SCRAP_ITEM_LIMIT;
 let pendingCount = 0;
 let pendingError = 0;
-const loadAllSellers = (callback) => {
+const loadAllSellers = (isSchedule, callback) => {
     sellerModel.getWhere({}, (qb, err, sellers)=>{
         console.log(`scraping-try-all: items of ${sellers.length} sellers`);
         sellers.forEach((s)=>{
             pendingCount ++;
-            loadOneSeller(s, maxItems, (qb, err)=>{
+            loadOneSeller(s, maxItems, isSchedule, (qb, err)=>{
                 qb.release();
                 pendingCount --;
                 if(err) {
@@ -39,9 +39,15 @@ const loadAllSellers = (callback) => {
     })
 }
 
-const loadOneSeller = (s, maxItems, callback) => {
+const loadOneSeller = (s, maxItems, isSchedule, callback) => {
     scrapHelper.scrapBySeller(s.login, maxItems, (rawItems, url)=>{
-        loadModel.inputRow({sellerId: s.id, srcUrl: url, isNew: true}, (qb, err, dbLoad) => {
+        const loadRow = {
+            sellerId: s.id,
+            srcUrl: url,
+            isSchedule: isSchedule === true ? 1 : 0,
+            isNew: true
+        };
+        loadModel.inputRow(loadRow, (qb, err, dbLoad) => {
             const items = rawItems.map((item) => ({
                 loadId: dbLoad.id,
                 itemNumber: item.itemNumber,
