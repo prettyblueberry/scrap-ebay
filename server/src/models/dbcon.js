@@ -19,9 +19,9 @@ const getQBuilder = (qb) => {
             console.log("!@#tracker", "qbuilder1", qb);
             return resolve(qb);
         }
-        console.log("!@#tracker", "qbuilder1", qb);
+        console.log("!@#tracker", "qbuilder2", qb);
         pool.get_connection(qb => {
-            console.log("!@#tracker", "qbuilder2", qb);
+            console.log("!@#tracker", "qbuilder3", qb);
             resolve(qb)
         })
     })
