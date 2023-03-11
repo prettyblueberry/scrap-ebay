@@ -29,7 +29,7 @@ const setScheduleJob = () => {
 
 //get
 const search = (query, req, res) => {
-    console.log("!@#tracker", "schedule get");
+    console.log("!@#tracker", "schedule search", req.originalUrl, req.method);
     scheduleModel.getWhere(query, (qb, err, times)=>{
         qb.release();
         console.log("!@#tracker", "schedule result", qb);
