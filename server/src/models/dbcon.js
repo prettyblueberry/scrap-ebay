@@ -15,9 +15,13 @@ const pool = new QueryBuilder(settings, 'mysql', 'pool');
 
 const getQBuilder = (qb) => {
     return new Promise((resolve) => {
-        if(qb) return resolve(qb);
-
+        if(qb) {
+            console.log("!@#tracker", "qbuilder1", qb);
+            return resolve(qb);
+        }
+        console.log("!@#tracker", "qbuilder1", qb);
         pool.get_connection(qb => {
+            console.log("!@#tracker", "qbuilder2", qb);
             resolve(qb)
         })
     })
