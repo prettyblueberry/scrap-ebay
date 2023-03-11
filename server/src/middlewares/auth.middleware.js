@@ -2,6 +2,7 @@ import jwtHelper from "../helpers/jwt.helper.js";
 import HS from "http-status-codes";
 export  function authMiddleware(req, res, next){
     console.log("!@#tracker", "authMiddleware");
+    if(req.login) return next();
     res.sendStatus(HS.UNAUTHORIZED);
 }
 
