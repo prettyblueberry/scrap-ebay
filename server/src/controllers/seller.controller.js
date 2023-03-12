@@ -66,7 +66,7 @@ const saveOne = (body, req, res) => {
 
 //delete
 const deleteOne = (id, req, res) => {
-    sellerModel.deleteRow(null,(qb, err, oldSeller)=>{
+    sellerModel.deleteRow(null,id, (qb, err, oldSeller)=>{
         qb.disconnect();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         res.json(oldSeller);
