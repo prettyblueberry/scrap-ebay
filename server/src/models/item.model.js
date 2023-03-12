@@ -96,7 +96,8 @@ const ItemsModel = {
                 return;
             }
             qb.order_by("datetimeCreated", "DESC")
-                .group_by(["itemNumber", "seller"])
+                .select("DISTINCT itemNumber")
+                .select("*")
                 .get(tblName, (err, res)=>{
                 if(err) {
                     const lastQuery = qb.last_query();
