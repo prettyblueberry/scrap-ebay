@@ -8,7 +8,12 @@ const getLatest = ()=>{
     return axios.get('/item/latest', {});
 };
 
+const getSold = ()=>{
+    return axios.get('/item/sold', {});
+};
+
 export default {
     getAll,
-    getLatest
+    getLatest,
+    getSold
 }

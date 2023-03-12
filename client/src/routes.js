@@ -60,6 +60,7 @@ import UsersManage from "layouts/users";
 import authController from "./controllers/auth";
 import SignOut from "./layouts/authentication/sign-out";
 import {useEffect, useState} from "react";
+import SoldItems from "./layouts/items/sold";
 
 const Username = ()=>{
   const [name, setName] = useState("");
@@ -115,6 +116,15 @@ const routes = [
     noCollapse: true,
     route: "/items",
     component: <ItemList filter={{loadDatetime: "latest"}}/>,
+  },
+  {
+    type: "collapse",
+    name: "Items Sold",
+    key: "sold-items",
+    icon: <Icon fontSize="medium">shopping cart</Icon>,
+    noCollapse: true,
+    route: "/sold-items",
+    component: <SoldItems/>,
   },
 
   { type: "divider", key: "divider-1" },

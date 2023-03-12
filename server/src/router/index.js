@@ -34,6 +34,7 @@ router.post('/load/all', (req, res)=>{
 
 routeRestful('/item', itemController, router);
 router.get('/item/latest', itemController.latest);
+router.get('/item/sold', itemController.sold);
 
 routeRestful('/schedule', scheduleController, router);
 

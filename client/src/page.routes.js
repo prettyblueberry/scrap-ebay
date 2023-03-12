@@ -55,6 +55,11 @@ const pageRoutes = [
         route: "/items",
       },
       {
+        name: "sold-items",
+        icon: <Icon>sale</Icon>,
+        route: "/sold-items",
+      },
+      {
         name: "sellers",
         icon: <Icon>users</Icon>,
         route: "/sellers/manage",

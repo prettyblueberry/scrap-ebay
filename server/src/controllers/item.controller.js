@@ -18,7 +18,16 @@ const latest = (req, res) => {
     })
 }
 
+const sold = (req, res) => {
+    itemModel.getLatestSold(null, {}, (qb, err, items)=>{
+        qb.disconnect();
+        if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
+        res.json(items);
+    })
+}
+
 export default {
     search,
-    latest
+    latest,
+    sold
 }
