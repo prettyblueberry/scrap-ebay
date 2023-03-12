@@ -4,8 +4,8 @@ import authController from "./auth.controller.js";
 
 //get
 const search = (query, req, res) => {
-    userModel.getWhere(query, (qb, err, users)=>{
-        qb.release();
+    userModel.getWhere(null, query, (qb, err, users)=>{
+        qb.disconnect();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         res.json(users);
     })
@@ -14,8 +14,8 @@ const search = (query, req, res) => {
 //patch
 const saveOne = (body, req, res) => {
     delete body["no"];
-    userModel.inputRow(body, (qb, err, user)=>{
-        qb.release();
+    userModel.inputRow(null, body, (qb, err, user)=>{
+        qb.disconnect();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         res.json(user);
     })
@@ -23,8 +23,8 @@ const saveOne = (body, req, res) => {
 
 //delete
 const deleteOne = (id, req, res) => {
-    userModel.deleteRow(id,(qb, err, oldUser)=>{
-        qb.release();
+    userModel.deleteRow(null, id,(qb, err, oldUser)=>{
+        qb.disconnect();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         res.json(oldUser);
     });
@@ -34,8 +34,8 @@ const updatePassword = (body, req, res) => {
     authController.verifyUser({ id: req.jsession.id }, body.currentPwd, ({status, data})=>{
         if(status !== HS.OK) res.status(status).json(data);
 
-        userModel.updateRow({id: req.jsession.id, pwd: body.newPwd}, (qb, err, user)=>{
-            qb.release();
+        userModel.updateRow(null, {id: req.jsession.id, pwd: body.newPwd}, (qb, err, user)=>{
+            qb.disconnect();
             if(err) {
                 const lastQuery = qb.last_query();
                 console.error(err, lastQuery);

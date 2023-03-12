@@ -10,8 +10,8 @@ const setScheduleJob = () => {
         scheduleJob.cancel();
         console.log("old schedule job has been canceled.")
     }
-    scheduleModel.getWhere({}, (qb, err, times)=>{
-        qb.release();
+    scheduleModel.getWhere(null, {}, (qb, err, times)=>{
+        qb.disconnect();
         if(times.length > 0 ){
             const time = times[0].time;
             const timeSchedule = moment(new Date(time)).format("ss mm HH")
@@ -29,10 +29,8 @@ const setScheduleJob = () => {
 
 //get
 const search = (query, req, res) => {
-    console.log("!@#tracker", "schedule search", req.originalUrl, req.method);
-    scheduleModel.getWhere(query, (qb, err, times)=>{
-        qb.release();
-        console.log("!@#tracker", "schedule result", qb);
+    scheduleModel.getWhere(null, query, (qb, err, times)=>{
+        qb.disconnect();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         res.json(times);
     })
@@ -41,8 +39,8 @@ const search = (query, req, res) => {
 //patch
 const saveOne = (body, req, res) => {
     const time = moment(new Date(body.time)).format("YYYY-MM-DD HH:mm:ss");
-    scheduleModel.inputRow({id: 1, time: time}, (qb, err, time)=>{
-        qb.release();
+    scheduleModel.inputRow(null, {id: 1, time: time}, (qb, err, time)=>{
+        qb.disconnect();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         setScheduleJob();
         res.json(time);

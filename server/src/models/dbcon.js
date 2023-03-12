@@ -8,22 +8,17 @@ const settings = {
     user: process.env.DB_USER ? process.env.DB_USER : "root",
     password: process.env.DB_PASSWORD ? process.env.DB_PASSWORD : "",
     port: process.env.DB_PORT ? process.env.DB_PORT : 3306,
-    timezone: 'utc' //important!
+    timezone: 'utc', //important!
 };
 
-const pool = new QueryBuilder(settings, 'mysql', 'pool');
 
 const getQBuilder = (qb) => {
     return new Promise((resolve) => {
-        if(qb) {
-            console.log("!@#tracker", "qbuilder1", qb);
-            return resolve(qb);
+        if(qb !== null && qb !== undefined) {
+            qb.disconnect();
         }
-        console.log("!@#tracker", "qbuilder2", qb);
-        pool.get_connection(qb => {
-            console.log("!@#tracker", "qbuilder3", qb);
-            resolve(qb)
-        })
+        const queryBuilder = new QueryBuilder(settings, 'mysql', 'single');
+        resolve(queryBuilder)
     })
 }
 

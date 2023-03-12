@@ -3,16 +3,16 @@ import itemModel from "../models/item.model.js";
 
 //get
 const search = (query, req, res) => {
-    itemModel.getWhere(query, (qb, err, items)=>{
-        qb.release();
+    itemModel.getWhere(null, query, (qb, err, items)=>{
+        qb.disconnect();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         res.json(items);
     })
 }
 
 const latest = (req, res) => {
-    itemModel.getLatest({}, (qb, err, items)=>{
-        qb.release();
+    itemModel.getLatest(null, {}, (qb, err, items)=>{
+        qb.disconnect();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         res.json(items);
     })

@@ -7,8 +7,8 @@ import moment from "moment";
 
 //get
 const search = (query, req, res) => {
-    loadModel.getWhere(query, (qb, err, loads)=>{
-        qb.release();
+    loadModel.getWhere(null, query, (qb, err, loads)=>{
+        qb.disconnect();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         res.json(loads);
     })
@@ -18,12 +18,11 @@ const maxItems = process.env.SCRAP_ITEM_LIMIT;
 let pendingCount = 0;
 let pendingError = 0;
 const loadAllSellers = (isSchedule, callback) => {
-    sellerModel.getWhere({}, (qb, err, sellers)=>{
+    sellerModel.getWhere(null, {}, (qb, err, sellers)=>{
         console.log(`scraping-try-all: items of ${sellers.length} sellers`);
         sellers.forEach((s)=>{
             pendingCount ++;
-            loadOneSeller(s, maxItems, isSchedule, (qb, err)=>{
-                qb.release();
+            loadOneSeller(s, maxItems, isSchedule, qb,(qb, err)=>{
                 pendingCount --;
                 if(err) {
                     pendingError ++;
@@ -31,15 +30,17 @@ const loadAllSellers = (isSchedule, callback) => {
                     console.error(err, lastQuery);
                 }
                 if(pendingCount === 0){
+                    qb.disconnect();
                     console.log(`scraping-finish-all: items of ${sellers.length} sellers with ${pendingCount} errors`);
-                    if(callback) callback();
+                    if(callback)
+                        callback();
                 }
             });
         });
     })
 }
 
-const loadOneSeller = (s, maxItems, isSchedule, callback) => {
+const loadOneSeller = (s, maxItems, isSchedule, qb, callback) => {
     scrapHelper.scrapBySeller(s.login, maxItems, (rawItems, url)=>{
         const loadRow = {
             sellerId: s.id,
@@ -47,7 +48,7 @@ const loadOneSeller = (s, maxItems, isSchedule, callback) => {
             isSchedule: isSchedule === true ? 1 : 0,
             isNew: true
         };
-        loadModel.inputRow(loadRow, (qb, err, dbLoad) => {
+        loadModel.inputRow(qb, loadRow, (qb, err, dbLoad) => {
             const items = rawItems.map((item) => ({
                 loadId: dbLoad.id,
                 itemNumber: item.itemNumber,
@@ -83,8 +84,8 @@ const loadOneSeller = (s, maxItems, isSchedule, callback) => {
 
 //delete
 const deleteOne = (id, req, res) => {
-    loadModel.deleteRow(id,(qb, err, oldLoad)=>{
-        qb.release();
+    loadModel.deleteRow(null,id, (qb, err, oldLoad)=>{
+        qb.disconnect();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         res.json(oldLoad);
     });

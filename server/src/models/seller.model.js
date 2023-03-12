@@ -4,8 +4,8 @@ const tblName = "sellers";
 
 const SellerModel = {
     //common
-    getWhere : function (where = {}, callback) {
-        dbCon().then((qb) => {
+    getWhere : function (qb, where = {}, callback) {
+        dbCon(qb).then((qb) => {
             if(Object.keys(where).length > 0){
                 qb.get_where(tblName, where, (err, res)=>{
                     if(err) {
@@ -27,8 +27,8 @@ const SellerModel = {
             });
         })
     },
-    findRowById : function (id, callback) {
-        dbCon().then((qb)=>{
+    findRowById : function (qb, id, callback) {
+        dbCon(qb).then((qb)=>{
             qb.limit(1).get_where(tblName, { id }, (err, res)=>{
                 if(err) {
                     const lastQuery = qb.last_query();
@@ -46,22 +46,22 @@ const SellerModel = {
         })
     },
 
-    inputRow: function (row, callback) {
+    inputRow: function (qb, row, callback) {
         if(row.isNew){
             delete row["isNew"];
             delete row["id"];
 
-            return this.insertRow(row, callback);
+            return this.insertRow(qb, row, callback);
         }
         delete row["isNew"];
-        return this.updateRow(row, callback);
+        return this.updateRow(qb, row, callback);
     },
-    insertRow : function (row, callback) {
+    insertRow : function (qb, row, callback) {
         const findRowById = this.findRowById;
         ///special
         row.dateCreated =  moment(new Date()).format("YYYY-MM-DD");
 
-        dbCon().then((qb)=>{
+        dbCon(qb).then((qb)=>{
         qb.insert(tblName, row, function(err, res) {
             if (err) {
                 const lastQuery = qb.last_query();
@@ -70,7 +70,7 @@ const SellerModel = {
             }
 
             if (res.affected_rows > 0) {
-                findRowById(res.insert_id, callback);
+                findRowById(qb, res.insert_id, callback);
             }
             else {
                 const lastQuery = qb.last_query();
@@ -81,8 +81,8 @@ const SellerModel = {
         }.bind(this));
     });
     },
-    updateRow : function (row, callback) {
-        dbCon().then((qb) => {
+    updateRow : function (qb, row, callback) {
+        dbCon(qb).then((qb) => {
             qb.update(tblName, row, {id: row.id}, (err, res)=>{
                 if (err) {
                     const lastQuery = qb.last_query();
@@ -91,7 +91,7 @@ const SellerModel = {
                 }
 
                 if (res.affected_rows > 0) {
-                    return this.findRowById(row.id, callback);
+                    return this.findRowById(qb, row.id, callback);
                 } else {
                     const lastQuery = qb.last_query();
                     const err = new Error("empty update!");
@@ -102,8 +102,8 @@ const SellerModel = {
         });
     },
 
-    deleteRow : function (id, callback) {
-        this.findRowById(id, (qb, err, oldRow)=>{
+    deleteRow : function (qb, id, callback) {
+        this.findRowById(qb, id, (qb, err, oldRow)=>{
             if(err) return callback(qb, err);
 
             qb.delete(tblName, {id: id}, (err, res)=>{

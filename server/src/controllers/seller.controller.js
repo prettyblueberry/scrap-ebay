@@ -5,8 +5,8 @@ import itemModel from "../models/item.model.js";
 
 //get
 const search = (query, req, res) => {
-    sellerModel.getWhere(query, (qb, err, sellers)=>{
-        qb.release();
+    sellerModel.getWhere(null, query, (qb, err, sellers)=>{
+        qb.disconnect();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         res.json(sellers);
     })
@@ -14,9 +14,8 @@ const search = (query, req, res) => {
 
 //analytics
 const analytics = (req, res) => {
-    loadModel.getLastDate((qb, err, lastDate)=>{
-        qb.release();
-        sellerModel.getWhere({},(qb, err, sellers)=>{
+    loadModel.getLastDate(null, (qb, err, lastDate)=>{
+        sellerModel.getWhere(qb,{},(qb, err, sellers)=>{
             const resData = [];
             if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
             if(sellers.length ===0) res.json(resData);
@@ -30,7 +29,7 @@ const analytics = (req, res) => {
                 });
             }
             promise.then((qb)=>{
-                qb.release();
+                qb.disconnect();
                 res.json(resData);
             });
         })
@@ -39,14 +38,14 @@ const analytics = (req, res) => {
 
 const analyticsSingle = (qb, seller, lastDate) => {
     const mapped = {...seller};
-    return itemModel.getSoldPeriod(qb,seller.id,lastDate,1)
+    return itemModel.getSoldPeriod(qb, seller.id,lastDate,1)
         .then(({qb, soldData})=>{
             mapped.soldLast1 = soldData.sold_amount;
-            return itemModel.getSoldPeriod(qb,seller.id,lastDate,7)
+            return itemModel.getSoldPeriod(qb, seller.id,lastDate,7)
         })
         .then(({qb, soldData})=>{
             mapped.soldLast7 = soldData.sold_amount;
-            return itemModel.getSoldPeriod(qb,seller.id,lastDate,30)
+            return itemModel.getSoldPeriod(qb, seller.id,lastDate,30)
         })
         .then(({qb, soldData}) => {
             mapped.soldLast30 = soldData.sold_amount;
@@ -58,8 +57,8 @@ const analyticsSingle = (qb, seller, lastDate) => {
 //patch
 const saveOne = (body, req, res) => {
     delete body["no"];
-    sellerModel.inputRow(body, (qb, err, seller)=>{
-        qb.release();
+    sellerModel.inputRow(null, body, (qb, err, seller)=>{
+        qb.disconnect();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         res.json(seller);
     })
@@ -67,8 +66,8 @@ const saveOne = (body, req, res) => {
 
 //delete
 const deleteOne = (id, req, res) => {
-    sellerModel.deleteRow(id,(qb, err, oldSeller)=>{
-        qb.release();
+    sellerModel.deleteRow(null,(qb, err, oldSeller)=>{
+        qb.disconnect();
         if(err) return res.sendStatus(HS.INTERNAL_SERVER_ERROR);
         res.json(oldSeller);
     });

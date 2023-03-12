@@ -17,8 +17,8 @@ const signIn = ({email, pwd}, req, res) => {
 };
 
 const signUp = (body, req, res)=>{
-    userModel.inputRow({ ...body, isNew: true }, (qb, err, user)=>{
-        qb.release();
+    userModel.inputRow(null,{ ...body, isNew: true }, (qb, err, user)=>{
+        qb.disconnect();
         if(err) {
             const errRes = makeMySqlErrResponse(err);
             return res.status(HS.INTERNAL_SERVER_ERROR).json(errRes);
@@ -29,7 +29,8 @@ const signUp = (body, req, res)=>{
 }
 
 const verifyUser = (where, pwd, callback) => {
-    userModel.find(where, (user)=>{
+    userModel.find(null, where, (qb, user)=>{
+        qb.disconnect();
         if(!user) {
             return callback({
                 status: HS.UNAUTHORIZED,
