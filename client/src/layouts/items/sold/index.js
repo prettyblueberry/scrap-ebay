@@ -37,11 +37,11 @@ function SoldItems() {
                             <MDBox p={3} lineHeight={1}>
                                 <MDBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={0}>
                                     <MDTypography variant="h5" fontWeight="medium">
-                                        Log of Loading
+                                        Sellers
                                     </MDTypography>
                                 </MDBox>
                                 <MDTypography variant="button" color="text">
-                                    You can check row to show items in detail.
+                                    Select sellers to filter items.
                                 </MDTypography>
                             </MDBox>
 
@@ -65,11 +65,11 @@ function SoldItems() {
                             <MDBox p={3} lineHeight={1}>
                                 <MDBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={0}>
                                     <MDTypography variant="h5" fontWeight="medium">
-                                        Saved Items
+                                        Items Sold
                                     </MDTypography>
                                 </MDBox>
                                 <MDTypography variant="button" color="text">
-                                    Items of checked loading.
+                                    Items which have numbers of sold
                                 </MDTypography>
                             </MDBox>
                             <MDBox>
