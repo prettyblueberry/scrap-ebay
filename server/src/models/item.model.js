@@ -83,8 +83,7 @@ const ItemsModel = {
         dbCon(qb).then((qb)=>{
             if(Object.keys(where).length > 0){
                 qb.order_by("datetimeCreated", "DESC")
-                    .select("DISTINCT itemNumber")
-                    .select("*")
+                    .group_by(["itemNumber", "seller"])
                     .get_where(tblName, where, (err, res)=>{
                     if(err) {
                         const lastQuery = qb.last_query();
@@ -96,8 +95,7 @@ const ItemsModel = {
                 return;
             }
             qb.order_by("datetimeCreated", "DESC")
-                .select("DISTINCT itemNumber")
-                .select("*")
+                .group_by(["itemNumber", "seller"])
                 .get(tblName, (err, res)=>{
                 if(err) {
                     const lastQuery = qb.last_query();
