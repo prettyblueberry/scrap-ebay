@@ -7,8 +7,6 @@ import LinkIcon from "@mui/icons-material/LinkOutlined";
 import {
     GridActionsCellItem,
 } from "@mui/x-data-grid";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import {Link} from "react-router-dom";
 import LinearProgress from '@mui/material/LinearProgress';
 
 
@@ -96,4 +94,6 @@ const columns = [
             )
         }
     },
+    { field: 'timeSavedServer', headerName: 'TimeSavedServer', width:150,  headerAlign:'center', type:'string', editable: false, align: "center", renderCell:({value, row}) => row.datetimeCreated.replace("T", " ").substring(0,19) }
+
 ];
