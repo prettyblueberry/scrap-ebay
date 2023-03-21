@@ -2,28 +2,31 @@ import ItemDataGrid from "../../items/list/components/itemDataGrid";
 import itemController from "../../../controllers/item";
 import {useEffect, useState} from "react";
 
-
-export default function ItemLoadDataGrid({ loads,updateSignal, ...props }){
+export default function ItemLoadDataGrid({ loadId,updateSignal, ...props }){
     const [rows, setRows] = useState([]);
     const [filteredRows, setFilteredRows] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [pastLoadIds, setPastLoadIds] = useState([]);
 
     useEffect(() => {
-        setLoading(true);
-        itemController.getAll().then((res)=>{
-            setRows(res.data);
-            setFilteredRows(res.data);
-        }).finally(()=>{
-            setLoading(false);
-        });
-    }, [updateSignal]);
+        if(loadId && !pastLoadIds.includes(loadId)){
+            setLoading(true);
+            itemController.getByLoadIds(loadId).then((res)=>{
+                setRows(rows.concat(res.data));
+                setPastLoadIds([...pastLoadIds, loadId])
+                // setFilteredRows(res.data);
+            }).finally(()=>{
+                setLoading(false);
+            });
+        }
+    }, [updateSignal, loadId]);
 
     useEffect(()=>{
         if(rows.length > 0){
-            const filtered = rows.filter(r => loads.map(lo=>lo.id).includes(r.loadId));
+            const filtered = rows.filter(r => loadId === r.loadId);
             setFilteredRows(filtered);
         }
-    }, [loads])
+    }, [loadId, rows, updateSignal])
 
     return(
         <ItemDataGrid rows={filteredRows} loading={loading} {...props}/>

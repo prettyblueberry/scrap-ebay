@@ -10,9 +10,9 @@ import {
 import LinearProgress from '@mui/material/LinearProgress';
 
 
-export default function LoadDataGrid({setFilteredRows,updateSignal,loadingData, ...props}) {
+export default function LoadDataGrid({setSelectedLoadId,updateSignal,loadingData, ...props}) {
     const [rows, setRawRows] = useState([]);
-    const [selectionModel, setSelectionModel] = React.useState(() => rows.map((r)=>r.id));
+    const [selectionModel, setSelectionModel] = React.useState();
     const [loading, setLoading] = useState(false);
 
     const setRows = (rows)=> {
@@ -28,6 +28,7 @@ export default function LoadDataGrid({setFilteredRows,updateSignal,loadingData, 
                 return new Date(b.datetimeCreated) - new Date(a.datetimeCreated);
             });
             setRows(sorted);
+            if(rows.length > 0) setSelectionModel([rows[0].id]);
         }).finally(()=>{
             setLoading(false);
         });
@@ -49,6 +50,7 @@ export default function LoadDataGrid({setFilteredRows,updateSignal,loadingData, 
             const dbRow = res.data;
             setRows(rows.filter(r=> r.id !== dbRow.id));
         }).catch((err)=>{
+            console.error(err);
             setRows(rows);
         });
     };
@@ -58,11 +60,11 @@ export default function LoadDataGrid({setFilteredRows,updateSignal,loadingData, 
             columns={columns}
             rows={rows}
             onDeleteRow={onDeleteRow}
-            checkboxSelection
             selectionModel={selectionModel}
             onSelectionModelChange={(changed) => {
                 setSelectionModel(changed);
-                setFilteredRows(rows.filter((r) => changed.includes(r.id) ));
+                if(changed.length > 0)
+                    setSelectedLoadId(changed[0]);
             }}
             slots={{
                 loadingOverlay: LinearProgress,
@@ -94,6 +96,6 @@ const columns = [
             )
         }
     },
-    { field: 'timeSavedServer', headerName: 'TimeSavedServer', width:150,  headerAlign:'center', type:'string', editable: false, align: "center", renderCell:({value, row}) => row.datetimeCreated.replace("T", " ").substring(0,19) }
+    { field: 'timeSavedServer', headerName: 'TimeSavedServer', width:150,  headerAlign:'center', type:'string', editable: false, align: "center", renderCell:({row}) => row.datetimeCreated.replace("T", " ").substring(0,19) }
 
 ];

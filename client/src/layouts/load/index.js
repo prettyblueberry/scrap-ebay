@@ -7,7 +7,6 @@ import Card from "@mui/material/Card";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
 import MDButton from "../../components/MDButton";
-import Icon from "@mui/material/Icon";
 import LoadDataGrid from "../load/components/LoadDataGrid";
 import {useState} from "react";
 import ItemLoadDataGrid from "./components/ItemLoadDataGrid";
@@ -16,7 +15,7 @@ import ScheduleTimePicker from "./components/scheduleTimePicker";
 import MDSnackbar from "../../components/MDSnackbar";
 
 function LoadManage() {
-    const [filteredLoads, setFilteredLoads] = useState([]);
+    const [selectedLoadId, setSelectedLoadId] = useState(false);
     const [updateSignal, setUpdateSignal] = useState(0);
     const [loadingData, setLoadingData] = useState(false);
     const [infoSB, setInfoSB] = useState(false);
@@ -93,7 +92,7 @@ function LoadManage() {
                                     <Grid item md={12}>
                                         <Grid item md={12}>
                                             <MDBox m={2}>
-                                                <LoadDataGrid setFilteredRows={setFilteredLoads} updateSignal={updateSignal} loadingData={loadingData}
+                                                <LoadDataGrid setSelectedLoadId={setSelectedLoadId} updateSignal={updateSignal} loadingData={loadingData}
                                                 />
                                             </MDBox>
                                         </Grid>
@@ -121,7 +120,7 @@ function LoadManage() {
                                     <Grid item md={12}>
                                         <Grid item md={12}>
                                             <MDBox m={2}>
-                                                <ItemLoadDataGrid loads={filteredLoads} updateSignal={updateSignal}/>
+                                                <ItemLoadDataGrid loadId={selectedLoadId} updateSignal={updateSignal}/>
                                             </MDBox>
                                         </Grid>
                                     </Grid>

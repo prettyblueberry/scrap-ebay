@@ -4,6 +4,14 @@ const getAll = ()=>{
     return axios.get('/item', {});
 };
 
+const getByLoadIds = (loadId)=>{
+    return axios.get('/item', {
+        params: {
+            loadId
+        }
+    });
+};
+
 const getLatest = ()=>{
     return axios.get('/item/latest', {});
 };
@@ -15,5 +23,6 @@ const getSold = ()=>{
 export default {
     getAll,
     getLatest,
-    getSold
+    getSold,
+    getByLoadIds
 }
