@@ -10,7 +10,7 @@ import {
 import LinearProgress from '@mui/material/LinearProgress';
 
 
-export default function LoadDataGrid({setSelectedLoadId,updateSignal,loadingData, ...props}) {
+export default function LoadDataGrid({dataQuery, setSelectedLoadId,updateSignal,loadingData, ...props}) {
     const [rows, setRawRows] = useState([]);
     const [selectionModel, setSelectionModel] = React.useState();
     const [loading, setLoading] = useState(false);
@@ -21,14 +21,20 @@ export default function LoadDataGrid({setSelectedLoadId,updateSignal,loadingData
 
     const getRows = () => {
         setLoading(true);
-        loadController.getAll().then((res)=>{
+        loadController.getAll(dataQuery).then((res)=>{
             const sorted = res.data.sort(function(a,b){
                 // Turn your strings into dates, and then subtract them
                 // to get a value that is either negative, positive, or zero.
                 return new Date(b.datetimeCreated) - new Date(a.datetimeCreated);
             });
             setRows(sorted);
-            if(rows.length > 0) setSelectionModel([rows[0].id]);
+            if(sorted.length > 0) {
+                let newModel = [];
+                const selectedId = sorted[0].id;
+                newModel.push(selectedId);
+                setSelectionModel(newModel);
+                setSelectedLoadId(selectedId);
+            }
         }).finally(()=>{
             setLoading(false);
         });
@@ -37,7 +43,7 @@ export default function LoadDataGrid({setSelectedLoadId,updateSignal,loadingData
     useEffect(() => {
         getRows();
 
-    },[updateSignal]);
+    },[updateSignal, dataQuery]);
 
     useEffect(()=>{
         if(loadingData === true)

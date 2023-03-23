@@ -22,12 +22,16 @@ const scrapItems =  (url, maxItems, callback) => {
     };
 
     (async () => {
-        // Run the actor and wait for it to finish
-        const run = await client.actor("dtrungtin/ebay-items-scraper").call(input);
+        try{
+            const run = await client.actor("dtrungtin/ebay-items-scraper").call(input);
 
-        // Fetch and print actor results from the run's dataset (if any)
-        const {items} = await client.dataset(run.defaultDatasetId).listItems();
-        callback(items, url);
+            // Fetch and print actor results from the run's dataset (if any)
+            const {items} = await client.dataset(run.defaultDatasetId).listItems();
+            // Run the actor and wait for it to finish
+            callback(null, items, url);
+        } catch(err) {
+            callback(err, [], url)
+        }
     })();
 }
 
@@ -49,13 +53,13 @@ const scrapSoldItemsBySeller = (sellerLogin, maxItems, callback) => {
 
 const scrapAllItemsBySeller = (sellerLogin, maxItems, callback) => {
     const getUrlFn = (sellerLogin)=>{
-        return`${site}/sch/i.html?_fss=1&_saslop=1&_sasl=${sellerLogin}&LH_SpecificSeller=1`;
+        return`${site}/sch/i.html?_nkw=&_armrs=1&_ipg=&_from=&_ssn=${sellerLogin}&_sop=10`;
     };
     return scrapItemsBySeller(sellerLogin, getUrlFn, maxItems, callback)
 }
 
+
 export default {
-    scrapBySeller: scrapSoldItemsBySeller,
     scrapAllItemsBySeller,
     scrapSoldItemsBySeller
 }

@@ -55,6 +55,7 @@ import Icon from "@mui/material/Icon";
 import SellerList from "layouts/sellers/analytics";
 import ItemList from "layouts/items/list";
 import LoadManage from "layouts/load";
+import LoadStore from "layouts/loadStore";
 import SellersManage from "layouts/sellers/manage";
 import UsersManage from "layouts/users";
 import authController from "./controllers/auth";
@@ -138,6 +139,15 @@ const routes = [
     noCollapse: true,
     route: "/load",
     component: <LoadManage />,
+  },
+  {
+    type: "collapse",
+    name: "Load Store from eBay",
+    key: "load-store",
+    icon: <Icon fontSize="medium">download</Icon>,
+    noCollapse: true,
+    route: "/load-store",
+    component: <LoadStore />,
   },
   {
     type: "collapse",

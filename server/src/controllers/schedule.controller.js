@@ -18,7 +18,7 @@ const setScheduleJob = () => {
             const timeStr = moment(new Date(time)).format("HH:mm:ss")
             scheduleJob = schedule.scheduleJob(`${timeSchedule} * * *`, function(){
                 console.log("schedule job start:" , timeStr)
-                loadController.loadAllSellers(true,()=>{
+                loadController.loadSoldItemsByAllSellers(true,()=>{
                     console.log("schedule job finish")
                 });
             });

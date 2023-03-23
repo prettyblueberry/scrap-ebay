@@ -26,9 +26,15 @@ routeRestful('/seller', sellerController, router);
 router.get('/seller/analytics', sellerController.analytics);
 
 routeRestful('/load', loadController, router);
-router.post('/load/all', (req, res)=>{
+router.post('/load/sold-all', (req, res)=>{
     res.sendStatus(HS.OK);
-    loadController.loadAllSellers(false,()=>{
+    loadController.loadSoldItemsByAllSellers(false,()=>{
+    });
+})
+
+router.post('/load/store', (req, res)=>{
+    res.sendStatus(HS.OK);
+    loadController.loadStoreBySeller(null,  req.body.loginId, false,()=>{
     });
 })
 

@@ -6,42 +6,15 @@ import Footer from "../../examples/Footer";
 import Card from "@mui/material/Card";
 import MDBox from "../../components/MDBox";
 import MDTypography from "../../components/MDTypography";
-import MDButton from "../../components/MDButton";
 import LoadDataGrid from "../load/components/LoadDataGrid";
 import {useState} from "react";
-import ItemLoadDataGrid from "./components/ItemLoadDataGrid";
-import loadController from "../../controllers/load";
-import ScheduleTimePicker from "./components/scheduleTimePicker";
-import MDSnackbar from "../../components/MDSnackbar";
+import ItemLoadDataGrid from "../load/components/ItemLoadDataGrid";
+import SellerSelectGrid from "./components/sellerSelectGrid";
 
-function LoadManage() {
+
+function LoadStore() {
     const [selectedLoadId, setSelectedLoadId] = useState(false);
     const [updateSignal, setUpdateSignal] = useState(0);
-    const [loadingData, setLoadingData] = useState(false);
-    const [infoSB, setInfoSB] = useState(false);
-    const openInfoSB = () => setInfoSB(true);
-    const closeInfoSB = () => setInfoSB(false);
-    const renderInfoSB = (
-        <MDSnackbar
-            icon="warning"
-            title="Please Wait."
-            content="It takes several minutes to load all data from eBay."
-            dateTime=""
-            open={infoSB}
-            onClose={closeInfoSB}
-            close={closeInfoSB}
-        />
-    );
-
-    const loadAll = ()=>{
-        // setLoadingData(true);
-        openInfoSB();
-        loadController.loadAll().then(()=>{
-            //setUpdateSignal(updateSignal + 1);
-        }).finally(()=>{
-            setLoadingData(false);
-        });
-    };
 
     return (
         <DashboardLayout>
@@ -53,16 +26,16 @@ function LoadManage() {
                             <MDBox p={3} lineHeight={1}>
                                 <MDBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={0}>
                                     <MDTypography variant="h5" fontWeight="medium">
-                                        Schedule for Loading
+                                        Manual Loading all items of store by Sellers
                                     </MDTypography>
                                 </MDBox>
                                 <MDTypography variant="button" color="text">
-                                    You can make schedule for loading.
+                                    Please click download button of a seller.
                                 </MDTypography>
                             </MDBox>
 
                             <MDBox p={3} lineHeight={1}>
-                                <ScheduleTimePicker />
+                                <SellerSelectGrid />
                             </MDBox>
                         </Card>
                     </MDBox>
@@ -71,16 +44,8 @@ function LoadManage() {
                             <MDBox p={3} lineHeight={1}>
                                 <MDBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={0}>
                                     <MDTypography variant="h5" fontWeight="medium">
-                                        Log of Loading
+                                        Log of Loading all items of store
                                     </MDTypography>
-                                    <MDBox display="flex">
-                                        <MDBox>
-                                            <MDButton variant="gradient" color="info" ml={2} onClick={loadAll}>
-                                                Load
-                                            </MDButton>
-                                            {renderInfoSB}
-                                        </MDBox>
-                                    </MDBox>
                                 </MDBox>
                                 <MDTypography variant="button" color="text">
                                     You can check row to show items in detail.
@@ -93,9 +58,9 @@ function LoadManage() {
                                         <Grid item md={12}>
                                             <MDBox m={2}>
                                                 <LoadDataGrid
+                                                    dataQuery={{loadType: "ItemsAllBySeller"}}
                                                     setSelectedLoadId={setSelectedLoadId}
                                                     updateSignal={updateSignal}
-                                                    loadingData={loadingData}
                                                 />
                                             </MDBox>
                                         </Grid>
@@ -138,4 +103,4 @@ function LoadManage() {
     );
 }
 
-export default LoadManage;
+export default LoadStore;
